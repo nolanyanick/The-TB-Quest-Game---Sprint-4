@@ -25,6 +25,7 @@ namespace TB_QuestGame
         EditPlayerInfo,
         PlayerInventory,
         PlayerTreasure,
+        PirateLocationsVisited,
         ListDestinations,
         ListItems,
         ListTreasures,
