@@ -16,6 +16,7 @@ namespace TB_QuestGame
         private ConsoleView _gameConsoleView;
         private Player _gamePlayer;
         private Universe _gameUniverse;
+        private IslandLocation _currentLocation;
         private bool _playingGame;
 
         #endregion
@@ -119,6 +120,10 @@ namespace TB_QuestGame
 
                     case PlayerAction.ListDestinations:
                         _gameConsoleView.DisplayListOfIslandLocations();
+                        break;
+
+                    case PlayerAction.LookAround:
+                        _gameConsoleView.DisplayLookAround();
                         break;
 
                     case PlayerAction.Return:

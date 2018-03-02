@@ -39,6 +39,7 @@ namespace TB_QuestGame
         private bool _personlity;
         private WeaponType  _weapon;
         private GenderType _gender;
+        private int _islandLocationId;
 
         #endregion
 
@@ -72,6 +73,12 @@ namespace TB_QuestGame
         {
             get { return _weapon; }
             set { _weapon = value; }
+        }
+
+        public int IslandLocationId
+        {
+            get { return _islandLocationId; }
+            set { _islandLocationId = value; }
         }
 
         #endregion
