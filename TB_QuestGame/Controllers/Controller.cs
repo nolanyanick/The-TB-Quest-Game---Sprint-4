@@ -126,6 +126,19 @@ namespace TB_QuestGame
                         _gameConsoleView.DisplayLookAround();
                         break;
 
+                    case PlayerAction.Travel:
+                        //
+                        // get new location choice and update current location
+                        //
+                        _gamePlayer.IslandLocationId = _gameConsoleView.DisplayGetNextIslandLocation();
+                        _currentLocation = _gameUniverse.GetIslandLocationById(_gamePlayer.IslandLocationId);
+
+                        //
+                        // display game play screen with current location info
+                        //
+                        _gameConsoleView.DisplayGamePlayScreen("Current Location", Text.CurrentLocationInfo(_currentLocation), ActionMenu.MainMenu, "");
+                        break;
+
                     case PlayerAction.Return:
                         _gameConsoleView.ReturnPlayerToMainScreen();
                         break;
