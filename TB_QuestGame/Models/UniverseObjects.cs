@@ -16,16 +16,19 @@ namespace TB_QuestGame
 
             new IslandLocation
             {
-                CommonName = "Aion Base Lab",
+                CommonName = "Port Royal",
                 SpaceTimeLocationID = 1,
-                UniversalDate = 386759,
+                UniversalDate = 1657,
                 UniversalLocation = "P-3, SS-278, G-2976, LS-3976",
-                Description = "The Norlon Corporation research facility located in " +
-                    "the city of Heraklion on the north coast of Crete and the top secret " +
-                    "research lab for the Aion Project.\n",
-                GeneralContents = "The lab is a large, well lit room, and staffed " +
-                    "by a small number of scientists, all wearing light blue uniforms with the " +
-                    "hydra-like Norlan Corporation logo. \n",
+                Description = "Located on the largest island in the Caribbean, Port Royal is the largest city " +
+                "functioning as the centre of shipping and commerce in the Caribbean Sea." +
+                "Currently under English control, Port Royal is not only a place of gaudy displays of" +
+                "wealth and loose morals, but also a mecha for pirates and buccaneers alike.",
+                GeneralContents = "There are many ornate buildings lining the streets with numerous " +
+                    "smaller shacks tucked aways in the alleys. It's currently high noon making the port" +
+                    "seem like a tropical paradise. There are countless people, " +
+                    "raning from English calvarymen to commonfolk and pirates, all  " +
+                    "soaking up the sun and roaming the streets.",
                 Accessable = true,
                 ExperiencePoints = 10
             },

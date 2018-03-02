@@ -117,6 +117,10 @@ namespace TB_QuestGame
                         _gameConsoleView.DisplayPirateInfo();
                         break;
 
+                    case PlayerAction.ListDestinations:
+                        _gameConsoleView.DisplayListOfIslandLocations();
+                        break;
+
                     case PlayerAction.Return:
                         _gameConsoleView.ReturnPlayerToMainScreen();
                         break;
@@ -142,12 +146,18 @@ namespace TB_QuestGame
         /// </summary>
         private void InitializeMission()
         {
-            Player pirate = _gameConsoleView.GetInitialPirateInfo();
-            
-            _gamePlayer.Age = pirate.Age;
-            _gamePlayer.Gender = pirate.Gender;
-            _gamePlayer.Personality = pirate.Personality;
-            _gamePlayer.Name = _gameConsoleView.GetPirateName(pirate);
+            //Player pirate = _gameConsoleView.GetInitialPirateInfo();
+            Player pirate = new Player();
+
+            //_gamePlayer.Age = pirate.Age;
+            //_gamePlayer.Gender = pirate.Gender;
+            //_gamePlayer.Personality = pirate.Personality;
+            //_gamePlayer.Name = _gameConsoleView.GetPirateName(pirate);
+
+            _gamePlayer.Age = 22;
+            _gamePlayer.Gender = Character.GenderType.MALE;
+            _gamePlayer.Personality = false;
+            _gamePlayer.Name = "Bob";
             _gamePlayer.ShipOwner = pirate.ShipOwner;
             _gamePlayer.Coin = pirate.Coin;
             _gamePlayer.Weapon = pirate.Weapon;

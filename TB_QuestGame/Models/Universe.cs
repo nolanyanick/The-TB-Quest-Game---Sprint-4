@@ -26,6 +26,19 @@ namespace TB_QuestGame
 
         #endregion
 
+        #region constructor
+        //
+        // default Universe constructor
+        //
+        public Universe()
+        {
+            //
+            // add all of the universe objects to the game
+            // 
+            InitializeUniverse();
+        }
+        #endregion
+
         #region methods to initialize all game elements
 
         /// <summary>

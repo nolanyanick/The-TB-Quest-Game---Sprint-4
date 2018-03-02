@@ -60,35 +60,6 @@ namespace TB_QuestGame
             return messageBoxText;
         }
 
-        public static string ListIslandLocations(IEnumerable<IslandLocation> islandLocations)
-        {
-            string messageBox =
-            "Island Locations\n" +
-            " \n" +
-
-            //
-            // display table header
-            //
-            "ID".PadRight(10) + "Name".PadRight(30) + " \n" +
-            "---".PadRight(10) + "-----------------------".PadRight(30) + " \n";
-                
-             //
-             // display all locations
-             //
-             string islandLocationList = null;
-            foreach (IslandLocation island in islandLocations)
-            {
-                islandLocationList +=
-                    $"{island.SpaceTimeLocationID}".PadRight(10) +
-                    $"{island.CommonName}".PadRight(30) +
-                    Environment.NewLine;
-            }
-
-            messageBox = islandLocationList;
-
-            return messageBox;
-        }
-
         #region Initialize Mission Text
 
         public static string InitializeMissionIntro()
@@ -262,6 +233,37 @@ namespace TB_QuestGame
                " \n";
 
             return messageBoxText;
+        }
+
+        /// <summary>
+        /// displays all locations
+        /// </summary>        
+        public static string ListIslandLocations(IEnumerable<IslandLocation> islandLocations)
+        {
+            string messageBox =
+            "Island Locations\n" +
+            " \n" +
+
+            //
+            // display table header
+            //
+            "ID".PadRight(10) + "Name".PadRight(30) + " \n" +
+            "---".PadRight(10) + "-----------------------".PadRight(30) + " \n";
+
+            // display all locations
+            //
+            string islandLocationList = null;
+            foreach (IslandLocation island in islandLocations)
+            {
+                islandLocationList +=
+                    $"{island.SpaceTimeLocationID}".PadRight(10) +
+                    $"{island.CommonName}".PadRight(30) +
+                    Environment.NewLine;
+            }
+
+            messageBox += islandLocationList;
+
+            return messageBox;
         }
 
         //public static string Travel(int currentSpaceTimeLocationId, List<SpaceTimeLocation> spaceTimeLocations)

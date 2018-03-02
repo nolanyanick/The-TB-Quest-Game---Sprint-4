@@ -708,6 +708,11 @@ namespace TB_QuestGame
             Console.ReadKey();
         }        
 
+        public void DisplayListOfIslandLocations()
+        {
+            DisplayGamePlayScreen("List - Island Locations", Text.ListIslandLocations(_gameUniverse.IslandLocations), ActionMenu.MainMenu, "");
+        }
+
         #endregion
 
         #endregion
