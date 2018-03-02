@@ -26,7 +26,7 @@ namespace TB_QuestGame
 
         #endregion
 
-        #region constructor
+        #region CONSTRUCTORS
         //
         // default Universe constructor
         //
@@ -39,7 +39,7 @@ namespace TB_QuestGame
         }
         #endregion
 
-        #region methods to initialize all game elements
+        #region METHODS
 
         /// <summary>
         /// initialize the universe with all of the island locations
@@ -49,6 +49,99 @@ namespace TB_QuestGame
             _islandLocations = UniverseObjects.IslandLocations;
         }
 
+        /// <summary>
+        /// determines if the user selected a valid island location ID
+        /// </summary>
+        public bool IsValidIslandLocationId(int islandLocationId)
+        {
+            List<int> islandLocationIds = new List<int>();
+
+            //
+            // create a list of island ids
+            // 
+            foreach (IslandLocation island in _islandLocations)
+            {
+                islandLocationIds.Add(island.IslandLocationID);
+            }
+
+            //
+            // determine if the island id is valid and return that value
+            //
+            if (islandLocationIds.Contains(islandLocationId))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// gets an island location ID choosen from the user
+        /// </summary>
+        public IslandLocation GetIslandLocationById(int id)
+        {
+            IslandLocation islandLocation = null;
+
+            //
+            // shift through islandLocation list and select correct one
+            //
+            foreach (IslandLocation location in _islandLocations)
+            {
+                if (location.IslandLocationID == id)
+                {
+                    islandLocation = location;
+                }
+            }
+
+            //
+            // if the ID is not found wihtin the universe,
+            // throw an exception
+            //
+            if (islandLocation == null)
+            {
+                string feedbackMessage = $"The Island Location ID, {id}, does not exist on the current Map.";
+                throw new ArgumentException(id.ToString(), feedbackMessage);
+            }
+
+            return islandLocation;
+        }
+
+        /// <summary>
+        /// detrmines if the choosen island location is accessible or not
+        /// </summary>
+        public bool IsAccessibleLocation(int islandLocationId)
+        {
+            IslandLocation islandLocation = GetIslandLocationById(islandLocationId);
+            if (islandLocation.Accessible == true)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// gets the maximum island location ID
+        /// </summary>
+        public int GetMaxIslandLocationId()
+        {
+            int MaxId = 0;
+
+            foreach (IslandLocation islandLocation in IslandLocations)
+            {
+                if (islandLocation.IslandLocationID > MaxId)
+                {
+                    MaxId = islandLocation.IslandLocationID;
+                }
+            }
+
+            return MaxId;
+        }
+        
         #endregion
     }
 }
