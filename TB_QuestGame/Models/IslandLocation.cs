@@ -12,11 +12,11 @@ namespace TB_QuestGame
 
         private string _commonName;
         private int _islandLocationID; // must be a unique value for each object
-        private int _universalDate;
-        private string _universalLocation;
+        private int _date;
+        private string _coordinates;
         private string _description;
         private string _generalContents;
-        private bool _accessable;
+        private bool _accessible;
         private int _experiencePoints;
 
         #endregion
@@ -30,22 +30,22 @@ namespace TB_QuestGame
             set { _commonName = value; }
         }
 
-        public int SpaceTimeLocationID
+        public int IslandLocationID
         {
             get { return _islandLocationID; }
             set { _islandLocationID = value; }
         }
 
-        public int UniversalDate
+        public int Date
         {
-            get { return _universalDate; }
-            set { _universalDate = value; }
+            get { return _date; }
+            set { _date = value; }
         }
 
-        public string UniversalLocation
+        public string Coordinates
         {
-            get { return _universalLocation; }
-            set { _universalLocation = value; }
+            get { return _coordinates; }
+            set { _coordinates = value; }
         }
 
         public string Description
@@ -60,10 +60,10 @@ namespace TB_QuestGame
             set { _generalContents = value; }
         }
 
-        public bool Accessable
+        public bool Accessible
         {
-            get { return _accessable; }
-            set { _accessable = value; }
+            get { return _accessible; }
+            set { _accessible = value; }
         }
 
         public int ExperiencePoints
@@ -77,13 +77,12 @@ namespace TB_QuestGame
 
         #region CONSTRUCTORS
 
-
+        
 
         #endregion
 
 
         #region METHODS
-
 
 
         #endregion

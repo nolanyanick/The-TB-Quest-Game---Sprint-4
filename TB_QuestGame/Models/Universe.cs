@@ -18,6 +18,10 @@ namespace TB_QuestGame
         //
         private List<IslandLocation> _islandLocations;
 
+        #endregion
+
+        #region properties of lists
+
         public List<IslandLocation> IslandLocations
         {
             get { return _islandLocations; }
@@ -109,11 +113,12 @@ namespace TB_QuestGame
         }
 
         /// <summary>
-        /// detrmines if the choosen island location is accessible or not
+        /// determines if the choosen island location is accessible or not
         /// </summary>
         public bool IsAccessibleLocation(int islandLocationId)
         {
             IslandLocation islandLocation = GetIslandLocationById(islandLocationId);
+
             if (islandLocation.Accessible == true)
             {
                 return true;

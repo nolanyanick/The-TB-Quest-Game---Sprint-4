@@ -39,7 +39,7 @@ namespace TB_QuestGame
         // menu box colors
         //
         public static ConsoleColor MenuBackgroundColor = ConsoleColor.Black;
-        public static ConsoleColor MenuForegroundColor = ConsoleColor.DarkRed;
+        public static ConsoleColor MenuForegroundColor = ConsoleColor.DarkGray;
         public static ConsoleColor MenuBorderColor = ConsoleColor.DarkRed;
 
         //
@@ -60,5 +60,7 @@ namespace TB_QuestGame
         public static ConsoleColor InputBoxBorderColor = ConsoleColor.DarkGray;
         public static ConsoleColor InputBoxHeaderBackgroundColor = ConsoleColor.DarkCyan;
         public static ConsoleColor InputBoxHeaderForegroundColor = ConsoleColor.Yellow;
+
+        public static ConsoleColor coordinates = ConsoleColor.DarkGreen;
     }
 }

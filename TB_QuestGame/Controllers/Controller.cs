@@ -64,6 +64,7 @@ namespace TB_QuestGame
         private void ManageGameLoop()
         {
             PlayerAction travelerActionChoice = PlayerAction.None;
+            IslandLocation location = new IslandLocation();
 
             //
             // display splash screen
@@ -87,7 +88,7 @@ namespace TB_QuestGame
             //
             // initialize the mission traveler
             // 
-            InitializeMission();
+            InitializeMission(travelerActionChoice, location);
 
             //
             // prepare game play screen
@@ -99,6 +100,8 @@ namespace TB_QuestGame
             //
             while (_playingGame)
             {
+                
+
                 travelerActionChoice = _gameConsoleView.GetActionMenuChoice(ActionMenu.MainMenu);
 
                 //
@@ -115,7 +118,7 @@ namespace TB_QuestGame
                         break;
 
                     case PlayerAction.PlayerInfo:
-                        _gameConsoleView.DisplayPirateInfo();
+                        _gameConsoleView.DisplayPirateInfo();                       
                         break;
 
                     case PlayerAction.ListDestinations:
@@ -127,6 +130,21 @@ namespace TB_QuestGame
                         break;
 
                     case PlayerAction.Travel:
+
+                        //
+                        // determine if the player has a ship in order to travel
+                        //
+                        if (_gamePlayer.Ship == Player.ShipType.None)
+                        {
+                            _gamePlayer.ShipOwner = false;
+                            _gameConsoleView.DisplayInputErrorMessage("You currently do not own a ship needed to travel. Obtain a ship, and try again.");
+                            break;
+                        }
+                        else
+                        {
+                            _gamePlayer.ShipOwner = true;
+                        }
+
                         //
                         // get new location choice and update current location
                         //
@@ -134,13 +152,10 @@ namespace TB_QuestGame
                         _currentLocation = _gameUniverse.GetIslandLocationById(_gamePlayer.IslandLocationId);
 
                         //
-                        // display game play screen with current location info
+                        // display game play screen with current location info and coordiantes
                         //
                         _gameConsoleView.DisplayGamePlayScreen("Current Location", Text.CurrentLocationInfo(_currentLocation), ActionMenu.MainMenu, "");
-                        break;
-
-                    case PlayerAction.Return:
-                        _gameConsoleView.ReturnPlayerToMainScreen();
+                        _gameConsoleView.DisplayColoredText(_currentLocation.CommonName, travelerActionChoice, _currentLocation);
                         break;
 
                     case PlayerAction.Exit:
@@ -162,7 +177,7 @@ namespace TB_QuestGame
         /// <summary>
         /// initialize the player info
         /// </summary>
-        private void InitializeMission()
+        private void InitializeMission(PlayerAction choosenAction, IslandLocation location)
         {
             //Player pirate = _gameConsoleView.GetInitialPirateInfo();
             Player pirate = new Player();
@@ -170,16 +185,17 @@ namespace TB_QuestGame
             //_gamePlayer.Age = pirate.Age;
             //_gamePlayer.Gender = pirate.Gender;
             //_gamePlayer.Personality = pirate.Personality;
-            //_gamePlayer.Name = _gameConsoleView.GetPirateName(pirate);
 
-            _gamePlayer.Age = 22;
+            _gamePlayer.Age = 50;
             _gamePlayer.Gender = Character.GenderType.MALE;
             _gamePlayer.Personality = false;
-            _gamePlayer.Name = "Bob";
+            //_gamePlayer.Name = "Bill";
+            _gamePlayer.Name = _gameConsoleView.GetPirateName(pirate, choosenAction, location);
+
             _gamePlayer.ShipOwner = pirate.ShipOwner;
             _gamePlayer.Coin = pirate.Coin;
             _gamePlayer.Weapon = pirate.Weapon;
-            _gamePlayer.Ship = pirate.Ship;
+            _gamePlayer.Ship = Player.ShipType.BritishManOWar;
 
             //
             // echo the pirates's info

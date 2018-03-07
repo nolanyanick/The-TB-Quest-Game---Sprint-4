@@ -41,6 +41,7 @@ namespace TB_QuestGame
         #endregion
 
         #region METHODS
+
         /// <summary>
         /// display all of the elements on the game play screen on the console
         /// </summary>
@@ -311,8 +312,7 @@ namespace TB_QuestGame
                 Console.SetCursorPosition(ConsoleLayout.MessageBoxPositionLeft + 2, row);
                 Console.Write(messageTextLine);
                 row++;
-            }
-
+            }            
         }
 
         /// <summary>
@@ -372,6 +372,70 @@ namespace TB_QuestGame
         }
 
         /// <summary>
+        /// displays specific info in a different color
+        /// </summary>        
+        public void DisplayColoredText(string information, PlayerAction choosenAction, IslandLocation location)
+        {            
+            switch (choosenAction)
+            {
+                case PlayerAction.None:
+                    Console.SetCursorPosition(ConsoleLayout.MessageBoxPositionLeft + 15, ConsoleLayout.MenuBoxPositionTop + 3);
+                    Console.ForegroundColor = ConsoleColor.DarkCyan;
+                    Console.Write(information);
+                    break;                        
+
+                case PlayerAction.LookAround:
+                    Console.SetCursorPosition(ConsoleLayout.MessageBoxPositionLeft + 15, ConsoleLayout.MenuBoxPositionTop + 3);
+                    Console.ForegroundColor = ConsoleColor.DarkCyan;
+                    Console.Write(information);
+                    break;
+                          
+                case PlayerAction.Travel:
+                    //
+                    // location name
+                    //
+                    information = location.CommonName;
+                    Console.SetCursorPosition(ConsoleLayout.MessageBoxPositionLeft + 20, ConsoleLayout.MenuBoxPositionTop + 3);
+                    Console.ForegroundColor = ConsoleColor.DarkMagenta;
+                    Console.Write(information);
+
+                    //
+                    // coordinates
+                    //
+                    information = location.Coordinates;
+                    Console.SetCursorPosition(ConsoleLayout.MessageBoxPositionLeft + 15, ConsoleLayout.MenuBoxPositionTop + 4);
+                    Console.ForegroundColor = ConsoleColor.DarkGreen;
+                    Console.Write(information);
+                    break;
+
+                case PlayerAction.PlayerInfo:
+                    Console.SetCursorPosition(ConsoleLayout.MessageBoxPositionLeft + 15, ConsoleLayout.MenuBoxPositionTop + 3);
+                    Console.ForegroundColor = ConsoleColor.DarkCyan;
+                    Console.Write(information);
+                    break;
+
+                case PlayerAction.EditPlayerInfo:
+                    Console.SetCursorPosition(ConsoleLayout.MessageBoxPositionLeft + 15, ConsoleLayout.MenuBoxPositionTop + 3);
+                    Console.ForegroundColor = ConsoleColor.DarkCyan;
+                    Console.Write(information);
+                    break;
+
+                case PlayerAction.PirateLocationsVisited:
+                    break;
+
+                case PlayerAction.ListDestinations:
+                    break;
+
+                case PlayerAction.Exit:
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        #region ----- get initial player info -----
+        /// <summary>
         /// get the player's initial information at the beginning of the game
         /// </summary>
         /// <returns>traveler object with all properties updated</returns>
@@ -383,7 +447,7 @@ namespace TB_QuestGame
             // intro
             //
             DisplayGamePlayScreen("Quest Setup", Text.InitializeMissionIntro(), ActionMenu.MissionIntro, "");
-            GetContinueKey();          
+            GetContinueKey();
 
             //
             // get pirates's age
@@ -418,7 +482,7 @@ namespace TB_QuestGame
                 {
                     pirate.Personality = true;
                     selectingPersona = false;
-                                   }
+                }
                 else if (userResponse == "NO")
                 {
                     pirate.Personality = false;
@@ -438,7 +502,7 @@ namespace TB_QuestGame
         /// <summary>
         /// get pirate's name
         /// </summary>
-        public string GetPirateName(Player gamePirate)
+        public string GetPirateName(Player gamePirate, PlayerAction choosenAction, IslandLocation location)
         {
             bool choosingName = true;
 
@@ -448,7 +512,7 @@ namespace TB_QuestGame
             DisplayGamePlayScreen("Quest Setup - Name", Text.InitializeMissionGetPirateName(), ActionMenu.InitializePlayerName, "");
             DisplayInputBoxPrompt("Enter your name: ");
             gamePirate.Name = GetString();
-            
+
             if (gamePirate.Name == "1")
             {
                 //
@@ -462,6 +526,7 @@ namespace TB_QuestGame
                     string prompt = $"Generate new Name? (Yes or No): ";
 
                     DisplayGamePlayScreen("Quest Setup - Name", Text.InitializeMissionGetRandomName(gamePirate), ActionMenu.InitializeRandomName, "");
+                    DisplayColoredText(gamePirate.Name, choosenAction, location);
                     DisplayInputBoxPrompt(prompt);
                     userResponese = GetString().ToUpper();
 
@@ -506,9 +571,9 @@ namespace TB_QuestGame
                         GetContinueKey();
                     }
                 }
-                
+
             }
-            
+
             return gamePirate.Name;
         }
 
@@ -573,6 +638,7 @@ namespace TB_QuestGame
 
             return pirateName;
         }
+        #endregion
 
         #region ----- display responses to menu action choices -----
 
@@ -638,11 +704,6 @@ namespace TB_QuestGame
                             editingInfo = false;
                             break;
 
-                        case "3":
-                            ReturnPlayerToMainScreen();
-                            editingInfo = false;
-                            break;
-
                         case "4":
                             DisplayClosingScreen();
                             editingInfo = false;
@@ -660,14 +721,6 @@ namespace TB_QuestGame
                 }
             }
             return gamePirate;
-        }
-
-        /// <summary>
-        /// returns the player to main screen
-        /// </summary>
-        public void ReturnPlayerToMainScreen()
-        {
-            DisplayGamePlayScreen("Current Location Information", Text.CurrrentLocationInfo(), ActionMenu.MainMenu, "");
         }
 
         /// <summary>
@@ -708,9 +761,63 @@ namespace TB_QuestGame
             Console.ReadKey();
         }        
 
+        /// <summary>
+        /// displays a list of all island locations
+        /// </summary>
         public void DisplayListOfIslandLocations()
         {
             DisplayGamePlayScreen("List - Island Locations", Text.ListIslandLocations(_gameUniverse.IslandLocations), ActionMenu.MainMenu, "");
+        }
+
+        /// <summary>
+        /// displays information pertaining to the current location
+        /// </summary>
+        public void  DisplayLookAround()
+        {
+            IslandLocation currentIslandLocation = _gameUniverse.GetIslandLocationById(_gamePirate.IslandLocationId);
+            DisplayGamePlayScreen("Current Location", Text.LookAround(currentIslandLocation),ActionMenu.MainMenu, "");
+        }
+
+        /// <summary>
+        /// gets a location ID and confirms if it's valid
+        /// </summary>        
+        public int DisplayGetNextIslandLocation()
+        {
+            int islandLocationId = 0;
+            bool validIslandLocationId = false;
+
+            DisplayGamePlayScreen("Travel to a new Island", Text.Travel(_gamePirate, _gameUniverse.IslandLocations), ActionMenu.MainMenu, "");
+
+            while (!validIslandLocationId)
+            {
+                //
+                // get and integer from the user
+                //
+                GetInteger($"Enter your new location {_gamePirate.Name}: ", 1, _gameUniverse.GetMaxIslandLocationId(), out islandLocationId);
+
+                //
+                // validate choosen integer and determine accessbility level
+                //
+                if (_gameUniverse.IsValidIslandLocationId(islandLocationId))
+                {
+                    if (_gameUniverse.IsAccessibleLocation(islandLocationId))
+                    {
+                        validIslandLocationId = true;
+                    }
+                    else
+                    {
+                        ClearInputBox();
+                        DisplayInputErrorMessage("It appears you attempted to travel to inaccessible location. Please try again.");
+                    }
+                }
+                else
+                {
+                    ClearInputBox();
+                    DisplayInputErrorMessage("It appears you entered an invalid Island location ID. Please try again.");
+                }
+            }
+
+            return islandLocationId;
         }
 
         #endregion

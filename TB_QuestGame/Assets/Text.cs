@@ -89,9 +89,7 @@ namespace TB_QuestGame
         public static string InitializeMissionGetRandomName(Player gamePirate)
         {
             string messageBoxText =
-                "Random Name:" +
-                " \n" +
-               $"{gamePirate.Name}" +
+                "Random Name:" +                             
                 " \n" +
                 " \n" +
                 "If you would like to generate a new name, enter 'Yes'.\n" +
@@ -256,7 +254,7 @@ namespace TB_QuestGame
             foreach (IslandLocation island in islandLocations)
             {
                 islandLocationList +=
-                    $"{island.SpaceTimeLocationID}".PadRight(10) +
+                    $"{island.IslandLocationID}".PadRight(10) +
                     $"{island.CommonName}".PadRight(30) +
                     Environment.NewLine;
             }
@@ -266,29 +264,73 @@ namespace TB_QuestGame
             return messageBox;
         }
 
-        //public static string Travel(int currentSpaceTimeLocationId, List<SpaceTimeLocation> spaceTimeLocations)
-        //{
-        //    string messageBoxText =
-        //        $"{gameTraveler.Name}, Aion Base will need to know the name of the new location.\n" +
-        //        " \n" +
-        //        "Enter the ID number of your desired location from the table below.\n" +
-        //        " \n";
+        /// <summary>
+        /// allows user to "look around" their current location, and
+        /// displays location's general contents
+        /// </summary>      
+        public static string LookAround(IslandLocation islandLocation)
+        {
+            string messageBox = $"Current Location: {islandLocation.CommonName}\n" +
+                " \n" +
+                islandLocation.GeneralContents;
 
+            return messageBox;
+        }
 
-        //    string spaceTimeLocationList = null;
+        /// <summary>
+        /// displays travel information
+        /// </summary>
+        public static string Travel(Player gamePirate, List<IslandLocation> islandLocations)
+        {
+            string messageBox =
+                $"{gamePirate.Name}, your navigator will need to know the next destination." +
+                " \n" +
+                "Enter the ID number of your desired location from the table below." +
+                " \n" +
+                " \n" +
 
-        //    foreach (SpaceTimeLocation spaceTimeLocation in spaceTimeLocations)
-        //    {
-        //        if (race != Character.RaceType.None)
-        //        {
-        //            raceList += $"\t{race}\n";
-        //        }
-        //    }
+                //
+                // display table header
+                //
+                "ID".PadRight(10) + "Name".PadRight(30) + "Accessible".PadRight(10) + "\n" +
+                "---".PadRight(10) + "----------------------".PadRight(30) + "-------".PadRight(10) + "\n";
 
-        //    messageBoxText += raceList;
+            //
+            // display all locations except for current location
+            //
+            string islandLocationList = null;
+            foreach (IslandLocation islandLocation in islandLocations)
+            {
+                if (islandLocation.IslandLocationID != gamePirate.IslandLocationId)
+                {
+                    islandLocationList +=                     
+                    $"{islandLocation.IslandLocationID}".PadRight(10) +
+                    $"{islandLocation.CommonName}".PadRight(30) +
+                    $"{islandLocation.Accessible}".PadRight(10) +
+                    Environment.NewLine;
+                }
+            }
 
-        //    return messageBoxText;
-        //}
+            messageBox += islandLocationList;
+
+            return messageBox;
+        }
+
+        /// <summary>
+        /// displays current location info
+        /// </summary>
+        public static string CurrentLocationInfo(IslandLocation islandLocation)
+        {            
+            string messageBox =
+                "Current Location: \n" +
+                "Coordinates: \n" +
+                " \n" +
+                " \n" +                        
+
+                islandLocation.Description;            
+
+            return messageBox;
+        }
 
         #endregion
 

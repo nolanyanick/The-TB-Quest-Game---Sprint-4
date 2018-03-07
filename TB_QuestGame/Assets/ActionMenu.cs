@@ -62,8 +62,7 @@ namespace TB_QuestGame
                     { '3', PlayerAction.LookAround },
                     { '4', PlayerAction.Travel },
                     { '5', PlayerAction.PirateLocationsVisited },
-                    { '6', PlayerAction.ListDestinations },
-                    { '9', PlayerAction.Return },
+                    { '6', PlayerAction.ListDestinations },                  
                     { '0', PlayerAction.Exit }
                 }
         };
