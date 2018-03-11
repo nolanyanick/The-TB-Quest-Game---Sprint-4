@@ -14,7 +14,7 @@ namespace TB_QuestGame
         #region FIELDS
 
         private ConsoleView _gameConsoleView;
-        private Player _gamePlayer;
+        private Player _gamePirate;
         private Universe _gameUniverse;
         private IslandLocation _currentLocation;
         private bool _playingGame;
@@ -50,9 +50,9 @@ namespace TB_QuestGame
         /// </summary>
         private void InitializeGame()
         {
-            _gamePlayer = new Player();
+            _gamePirate = new Player();
             _gameUniverse = new Universe();
-            _gameConsoleView = new ConsoleView(_gamePlayer, _gameUniverse);
+            _gameConsoleView = new ConsoleView(_gamePirate, _gameUniverse);
             _playingGame = true;
 
             Console.CursorVisible = false;
@@ -63,8 +63,7 @@ namespace TB_QuestGame
         /// </summary>
         private void ManageGameLoop()
         {
-            PlayerAction travelerActionChoice = PlayerAction.None;
-            IslandLocation location = new IslandLocation();
+            PlayerAction travelerActionChoice = PlayerAction.None;                                             
 
             //
             // display splash screen
@@ -88,22 +87,27 @@ namespace TB_QuestGame
             //
             // initialize the mission traveler
             // 
-            InitializeMission(travelerActionChoice, location);
+            InitializeMission(travelerActionChoice);
 
             //
             // prepare game play screen
             //
-            _gameConsoleView.DisplayGamePlayScreen("Current Location", Text.CurrrentLocationInfo(), ActionMenu.MainMenu, "");
+            _currentLocation = _gameUniverse.GetIslandLocationById(_gamePirate.IslandLocationId);
+            _gameConsoleView.DisplayGamePlayScreen("Current Location", Text.CurrentLocationInfo(_currentLocation), ActionMenu.MainMenu, "");
+            _gameConsoleView.DisplayColoredText("", PlayerAction.LookAround, _currentLocation);
 
             //
             // game loop
             //
             while (_playingGame)
             {
-                
+                //
+                // update all game stats/info
+                //
+                UpdateGameStatus();
 
                 travelerActionChoice = _gameConsoleView.GetActionMenuChoice(ActionMenu.MainMenu);
-
+      
                 //
                 // choose an action based on the user's menu choice
                 //
@@ -112,21 +116,24 @@ namespace TB_QuestGame
                     case PlayerAction.None:
                         break;
 
-                    case PlayerAction.EditPlayerInfo:
-                        _gameConsoleView.DisplayEditPirateInfo();
+                    case PlayerAction.EditPlayerInfo:                       
+                        _gameConsoleView.DisplayEditPirateInformation(_currentLocation.CommonName, travelerActionChoice, _currentLocation);
                         _gameConsoleView.DisplayGamePlayScreen("Current Location", Text.CurrrentLocationInfo(), ActionMenu.MainMenu, "");
                         break;
 
                     case PlayerAction.PlayerInfo:
-                        _gameConsoleView.DisplayPirateInfo();                       
+                        _gameConsoleView.DisplayPirateInfo();
+                        _gameConsoleView.DisplayColoredText(_currentLocation.CommonName, travelerActionChoice, _currentLocation);
                         break;
 
                     case PlayerAction.ListDestinations:
                         _gameConsoleView.DisplayListOfIslandLocations();
+                        _gameConsoleView.DisplayColoredText(_currentLocation.CommonName, travelerActionChoice, _currentLocation);
                         break;
 
                     case PlayerAction.LookAround:
                         _gameConsoleView.DisplayLookAround();
+                        _gameConsoleView.DisplayColoredText(_currentLocation.CommonName, travelerActionChoice, _currentLocation);
                         break;
 
                     case PlayerAction.Travel:
@@ -134,28 +141,33 @@ namespace TB_QuestGame
                         //
                         // determine if the player has a ship in order to travel
                         //
-                        if (_gamePlayer.Ship == Player.ShipType.None)
+                        if (_gamePirate.Ship == Player.ShipType.None)
                         {
-                            _gamePlayer.ShipOwner = false;
+                            _gamePirate.ShipOwner = false;
                             _gameConsoleView.DisplayInputErrorMessage("You currently do not own a ship needed to travel. Obtain a ship, and try again.");
                             break;
                         }
                         else
                         {
-                            _gamePlayer.ShipOwner = true;
+                            _gamePirate.ShipOwner = true;
                         }
 
                         //
                         // get new location choice and update current location
                         //
-                        _gamePlayer.IslandLocationId = _gameConsoleView.DisplayGetNextIslandLocation();
-                        _currentLocation = _gameUniverse.GetIslandLocationById(_gamePlayer.IslandLocationId);
+                        _gamePirate.IslandLocationId = _gameConsoleView.DisplayGetNextIslandLocation(travelerActionChoice, _currentLocation);
+                        _currentLocation = _gameUniverse.GetIslandLocationById(_gamePirate.IslandLocationId);                        
 
                         //
                         // display game play screen with current location info and coordiantes
                         //
                         _gameConsoleView.DisplayGamePlayScreen("Current Location", Text.CurrentLocationInfo(_currentLocation), ActionMenu.MainMenu, "");
-                        _gameConsoleView.DisplayColoredText(_currentLocation.CommonName, travelerActionChoice, _currentLocation);
+                        _gameConsoleView.DisplayColoredText(_currentLocation.CommonName, PlayerAction.LookAround, _currentLocation);
+                        break;
+
+                    case PlayerAction.PirateLocationsVisited:
+                        _gameConsoleView.DisplayLocationsVisited();
+                        _gameConsoleView.DisplayColoredText(_currentLocation.CommonName, travelerActionChoice, _currentLocation);                    
                         break;
 
                     case PlayerAction.Exit:
@@ -177,7 +189,7 @@ namespace TB_QuestGame
         /// <summary>
         /// initialize the player info
         /// </summary>
-        private void InitializeMission(PlayerAction choosenAction, IslandLocation location)
+        private void InitializeMission(PlayerAction choosenAction)
         {
             //Player pirate = _gameConsoleView.GetInitialPirateInfo();
             Player pirate = new Player();
@@ -186,23 +198,43 @@ namespace TB_QuestGame
             //_gamePlayer.Gender = pirate.Gender;
             //_gamePlayer.Personality = pirate.Personality;
 
-            _gamePlayer.Age = 50;
-            _gamePlayer.Gender = Character.GenderType.MALE;
-            _gamePlayer.Personality = false;
+            _gamePirate.Name = _gameConsoleView.GetPirateName(pirate, choosenAction, _currentLocation);
+            _gamePirate.Age = 50;
+            _gamePirate.Gender = Character.GenderType.MALE;
+            _gamePirate.Personality = true;
             //_gamePlayer.Name = "Bill";
-            _gamePlayer.Name = _gameConsoleView.GetPirateName(pirate, choosenAction, location);
 
-            _gamePlayer.ShipOwner = pirate.ShipOwner;
-            _gamePlayer.Coin = pirate.Coin;
-            _gamePlayer.Weapon = pirate.Weapon;
-            _gamePlayer.Ship = Player.ShipType.BritishManOWar;
+            _gamePirate.ShipName = "Queen Anne's Revenge";
+            _gamePirate.ShipOwner = true;
+            _gamePirate.Coin = 1000000;
+            _gamePirate.Weapon = Player.WeaponType.DYNAMITE;
+            _gamePirate.Ship = Player.ShipType.BritishManOWar;
 
             //
             // echo the pirates's info
             //
            _gameConsoleView.DisplayGamePlayScreen("Quest Setup - Complete", Text.InitializeMissionEchoPirateInfo(pirate), ActionMenu.MissionIntro, "");
-           _gameConsoleView.GetContinueKey();
+           _gameConsoleView.DisplayColoredText("", choosenAction, _currentLocation);
+            _gameConsoleView.GetContinueKey();
         }
+
+        /// <summary>
+        /// updates all the game's info/stats
+        /// </summary>
+        private void UpdateGameStatus()
+        {
+            if (!_gamePirate.HasVisited(_currentLocation.IslandLocationID))
+            {
+                //
+                // add a new location to visited list
+                //
+                _gamePirate.IslandLocationsVisited.Add(_currentLocation.IslandLocationID);
+            }
+        }
+
+
+
+
 
         #endregion
     }

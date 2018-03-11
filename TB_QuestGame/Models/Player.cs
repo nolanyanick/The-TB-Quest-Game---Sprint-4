@@ -33,6 +33,7 @@ namespace TB_QuestGame
         private ShipType _ship;
         private List<string> _crew;        
         private string _shipName;
+        private List<int> _islandLocationsVisited;
 
         #endregion
 
@@ -69,18 +70,24 @@ namespace TB_QuestGame
             set { _ship = value; }
         }
 
+        public List<int> IslandLocationsVisited
+        {
+            get { return _islandLocationsVisited; }
+            set { _islandLocationsVisited = value; }
+        }
+
         #endregion
 
         #region CONSTRUCTORS
 
         public Player()
         {
-
+            _islandLocationsVisited = new List<int>();
         }
 
-        public Player(string name, GenderType race) : base(name, race)
+        public Player(string name, GenderType gender, int islandLocationID) : base(name, gender, islandLocationID)
         {
-
+            _islandLocationsVisited = new List<int>();
         }
 
         #endregion
@@ -147,6 +154,21 @@ namespace TB_QuestGame
             else
             {
                 return $"{_ship}, it is very important you have a ship in order to succeed.";
+            }
+        }
+        
+        /// <summary>
+        /// determines if the player has visited the island location
+        /// </summary>     
+        public bool HasVisited(int _islandLocationID)
+        {
+            if (IslandLocationsVisited.Contains(_islandLocationID))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
         

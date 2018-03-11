@@ -17,7 +17,7 @@ namespace TB_QuestGame
         // declare game objects for the ConsoleView object to use
         //
         Player _gamePirate;
-        Universe _gameUniverse;
+        Universe _gameUniverse;                     
 
         #endregion
 
@@ -49,8 +49,8 @@ namespace TB_QuestGame
         /// <param name="messageBoxText">message box text</param>
         /// <param name="menu">menu to use</param>
         /// <param name="inputBoxPrompt">input box text</param>
-        public void DisplayGamePlayScreen(string messageBoxHeaderText, string messageBoxText, Menu menu, string inputBoxPrompt)
-        {
+        public void DisplayGamePlayScreen(string messageBoxHeaderText, string messageBoxText,  Menu menu, string inputBoxPrompt)
+        {            
             //
             // reset screen to default window colors
             //
@@ -192,7 +192,7 @@ namespace TB_QuestGame
             Console.WriteLine(tabSpace + @"  | | | | | |  __/| | | || | (_) || | | |___| |  __/ (_) |\__ \");
             Console.WriteLine(tabSpace + @"  \_/ |_| |_|\___||_| |_||_|\__  ||_| |_|\____/\___|\__/\_\___/");
             Console.WriteLine(tabSpace + @"                              _/ /                             ");
-            Console.WriteLine(tabSpace + @"                             |__/                              ");        
+            Console.WriteLine(tabSpace + @"                             |__/                              ");                         
 
             Console.SetCursorPosition(80, 25);
             Console.Write("Press any key to continue or Esc to exit.");
@@ -248,7 +248,7 @@ namespace TB_QuestGame
             // display menu box header
             //
             Console.BackgroundColor = ConsoleTheme.MenuBorderColor;
-            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.ForegroundColor = ConsoleColor.White;
             Console.SetCursorPosition(ConsoleLayout.MenuBoxPositionLeft + 2, ConsoleLayout.MenuBoxPositionTop + 1);
             Console.Write(ConsoleWindowHelper.Center(menu.MenuTitle, ConsoleLayout.MenuBoxWidth - 4));
 
@@ -292,7 +292,7 @@ namespace TB_QuestGame
             // display message box header
             //
             Console.BackgroundColor = ConsoleTheme.MessageBoxBorderColor;
-            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.ForegroundColor = ConsoleColor.White;
             Console.SetCursorPosition(ConsoleLayout.MessageBoxPositionLeft + 2, ConsoleLayout.MessageBoxPositionTop + 1);
             Console.Write(ConsoleWindowHelper.Center(headerText, ConsoleLayout.MessageBoxWidth - 4));
 
@@ -369,61 +369,291 @@ namespace TB_QuestGame
                 DisplayInputBoxPrompt(backgroundColorString);
             }
             Console.ForegroundColor = ConsoleTheme.InputBoxForegroundColor;
-        }
-
+        }        
+      
         /// <summary>
         /// displays specific info in a different color
         /// </summary>        
         public void DisplayColoredText(string information, PlayerAction choosenAction, IslandLocation location)
-        {            
+        {
+            int position;
+            Console.CursorVisible = false;
+
             switch (choosenAction)
             {
                 case PlayerAction.None:
-                    Console.SetCursorPosition(ConsoleLayout.MessageBoxPositionLeft + 15, ConsoleLayout.MenuBoxPositionTop + 3);
-                    Console.ForegroundColor = ConsoleColor.DarkCyan;
-                    Console.Write(information);
-                    break;                        
+                    #region ***COLORS FOR MISC/OTHER SCREENS
+
+                    #region ---echo info screen---
+
+                    if (_gamePirate.Name != null)
+                    {
+                        //----NAME----//
+                        information = _gamePirate.Name;
+                        Console.SetCursorPosition(ConsoleLayout.MessageBoxPositionLeft + 20, ConsoleLayout.MenuBoxPositionTop + 7);
+                        Console.ForegroundColor = ConsoleColor.DarkCyan;
+                        Console.Write(information);
+
+                        //----AGE----//
+                        information = _gamePirate.Age.ToString();
+                        Console.SetCursorPosition(ConsoleLayout.MessageBoxPositionLeft + 19, ConsoleLayout.MenuBoxPositionTop + 8);
+                        Console.ForegroundColor = ConsoleColor.DarkCyan;
+                        Console.Write(information);
+
+                        //----GENDER----//
+                        information = Text.UppercaseFirst(_gamePirate.Gender.ToString());
+                        Console.SetCursorPosition(ConsoleLayout.MessageBoxPositionLeft + 22, ConsoleLayout.MenuBoxPositionTop + 9);
+                        Console.ForegroundColor = ConsoleColor.DarkCyan;
+                        Console.Write(information);
+
+                        //----PERSONALITY----//
+                        information = _gamePirate.PersonlityDescription();
+                        Console.SetCursorPosition(ConsoleLayout.MessageBoxPositionLeft + 27, ConsoleLayout.MenuBoxPositionTop + 10);
+                        if (_gamePirate.Personality)
+                        {
+                            Console.ForegroundColor = ConsoleColor.DarkGreen;
+                            Console.Write(information);
+                        }
+                        else
+                        {
+                            Console.ForegroundColor = ConsoleColor.DarkRed;
+                            Console.Write(information);
+                        }
+
+                        break;
+                    }
+
+                    #endregion
+
+                    #region ---random name screen---
+
+                    if (_gamePirate.Name == null)
+                    {
+                        Console.SetCursorPosition(ConsoleLayout.MessageBoxPositionLeft + 15, ConsoleLayout.MenuBoxPositionTop + 3);
+                        Console.ForegroundColor = ConsoleColor.DarkCyan;
+                        Console.Write(information);
+                        break;
+                    }
+
+                    #endregion                
+
+                    #endregion
+                    break;
 
                 case PlayerAction.LookAround:
-                    Console.SetCursorPosition(ConsoleLayout.MessageBoxPositionLeft + 15, ConsoleLayout.MenuBoxPositionTop + 3);
-                    Console.ForegroundColor = ConsoleColor.DarkCyan;
-                    Console.Write(information);
-                    break;
-                          
-                case PlayerAction.Travel:
-                    //
-                    // location name
-                    //
+                    #region ***COLORS FOR LOOK AROUND/CURRENT LOCATION SCREENS                  
+
+                    //-----NAME-----//
                     information = location.CommonName;
                     Console.SetCursorPosition(ConsoleLayout.MessageBoxPositionLeft + 20, ConsoleLayout.MenuBoxPositionTop + 3);
-                    Console.ForegroundColor = ConsoleColor.DarkMagenta;
+                    Console.ForegroundColor = ConsoleColor.DarkCyan;
                     Console.Write(information);
-
-                    //
-                    // coordinates
-                    //
+                    
+                    //-----COORDIANTES-----//
                     information = location.Coordinates;
                     Console.SetCursorPosition(ConsoleLayout.MessageBoxPositionLeft + 15, ConsoleLayout.MenuBoxPositionTop + 4);
                     Console.ForegroundColor = ConsoleColor.DarkGreen;
-                    Console.Write(information);
+                    Console.Write(information);                                   
+
+                    #endregion
+                    break;
+
+                case PlayerAction.Travel:                  
+                    #region ***COLORS FOR TRAVEL SCREEN
+
+                            //----ID----// 
+                            position = 8;
+                            foreach (IslandLocation island in _gameUniverse.IslandLocations)
+                            {
+                                if (island.IslandLocationID != _gamePirate.IslandLocationId)
+                                {
+                                    Console.SetCursorPosition(ConsoleLayout.MessageBoxPositionLeft + 2, ConsoleLayout.MenuBoxPositionTop + position++);
+                                    Console.ForegroundColor = ConsoleColor.DarkYellow;
+                                    Console.Write(island.IslandLocationID);
+                                }
+                            }
+
+                            //----NAME----//      
+                            position = 8;
+                            foreach (IslandLocation island in _gameUniverse.IslandLocations)
+                            {
+                                if (island.IslandLocationID != _gamePirate.IslandLocationId)
+                                {
+                                    Console.SetCursorPosition(ConsoleLayout.MessageBoxPositionLeft + 12, ConsoleLayout.MenuBoxPositionTop + position++);
+                                    Console.ForegroundColor = ConsoleColor.DarkCyan;
+                                    Console.Write(island.CommonName);
+                                }
+                            }
+
+                            //----ACCESSIBILITY----//      
+                            position = 8;
+                            foreach (IslandLocation island in _gameUniverse.IslandLocations)
+                            {
+                                if (island.IslandLocationID != _gamePirate.IslandLocationId)
+                                {
+                                    Console.SetCursorPosition(ConsoleLayout.MessageBoxPositionLeft + 42, ConsoleLayout.MenuBoxPositionTop + position++);
+                                    if (island.Accessible)
+                                    {
+                                        Console.ForegroundColor = ConsoleColor.DarkGreen;
+                                        Console.Write(island.Accessible);
+                                    }
+                                    else
+                                    {
+                                        Console.ForegroundColor = ConsoleColor.DarkRed;
+                                        Console.Write(island.Accessible);
+                                    }
+                                }
+                            }
+
+                            #endregion
                     break;
 
                 case PlayerAction.PlayerInfo:
-                    Console.SetCursorPosition(ConsoleLayout.MessageBoxPositionLeft + 15, ConsoleLayout.MenuBoxPositionTop + 3);
+                    #region ***COLORS FOR PLAYER INFO SCREEN
+
+                    //----NAME----//
+                    information = _gamePirate.Name;
+                    Console.SetCursorPosition(ConsoleLayout.MessageBoxPositionLeft + 20, ConsoleLayout.MenuBoxPositionTop + 3);
                     Console.ForegroundColor = ConsoleColor.DarkCyan;
                     Console.Write(information);
+
+                    //----AGE----//
+                    information = _gamePirate.Age.ToString();
+                    Console.SetCursorPosition(ConsoleLayout.MessageBoxPositionLeft + 19, ConsoleLayout.MenuBoxPositionTop + 4);
+                    Console.ForegroundColor = ConsoleColor.DarkCyan;
+                    Console.Write(information);
+
+                    //----GENDER----//
+                    information = Text.UppercaseFirst(_gamePirate.Gender.ToString());
+                    Console.SetCursorPosition(ConsoleLayout.MessageBoxPositionLeft + 22, ConsoleLayout.MenuBoxPositionTop + 5);
+                    Console.ForegroundColor = ConsoleColor.DarkCyan;
+                    Console.Write(information);
+
+                    //----PERSONALITY----//
+                    information = _gamePirate.PersonlityDescription();
+                    Console.SetCursorPosition(ConsoleLayout.MessageBoxPositionLeft + 27, ConsoleLayout.MenuBoxPositionTop + 6);
+                    if (_gamePirate.Personality)
+                    {
+                        Console.ForegroundColor = ConsoleColor.DarkGreen;
+                        Console.Write(information);
+                    }
+                    else
+                    {
+                        Console.ForegroundColor = ConsoleColor.DarkRed;
+                        Console.Write(information);
+                    }
+
+                    //----COIN----//
+                    information = _gamePirate.Coin.ToString();
+                    Console.SetCursorPosition(ConsoleLayout.MessageBoxPositionLeft + 13, ConsoleLayout.MenuBoxPositionTop + 12);
+                    Console.ForegroundColor = ConsoleColor.DarkYellow;
+                    Console.Write(information);
+
+                    //----WEAPON----//
+                    information = Text.UppercaseFirst(_gamePirate.Weapon.ToString());
+                    Console.SetCursorPosition(ConsoleLayout.MessageBoxPositionLeft + 15, ConsoleLayout.MenuBoxPositionTop + 13);
+                    Console.ForegroundColor = ConsoleColor.DarkRed;
+                    Console.Write(information);
+
+                    //----SHIPNAME----//
+                    information = _gamePirate.ShipName;
+                    Console.SetCursorPosition(ConsoleLayout.MessageBoxPositionLeft + 18, ConsoleLayout.MenuBoxPositionTop + 14);
+                    Console.ForegroundColor = ConsoleColor.DarkCyan;
+                    Console.Write(information);
+
+                    //----SHIPTYPE----//
+                    information = _gamePirate.Ship.ToString();
+                    Console.SetCursorPosition(ConsoleLayout.MessageBoxPositionLeft + 13, ConsoleLayout.MenuBoxPositionTop + 15);
+                    Console.ForegroundColor = ConsoleColor.DarkCyan;
+                    Console.Write(information);
+
+                    #endregion
                     break;
 
                 case PlayerAction.EditPlayerInfo:
-                    Console.SetCursorPosition(ConsoleLayout.MessageBoxPositionLeft + 15, ConsoleLayout.MenuBoxPositionTop + 3);
+                    #region ***COLORS FOR EDIT INFO SCREEN
+
+                    //-----NAME1-----//
+                    information = _gamePirate.Name;
+                    Console.SetCursorPosition(ConsoleLayout.MessageBoxPositionLeft + 32, ConsoleLayout.MenuBoxPositionTop + 7);
                     Console.ForegroundColor = ConsoleColor.DarkCyan;
                     Console.Write(information);
+
+                    //-----NAME2-----//
+                    information = _gamePirate.Name;
+                    Console.SetCursorPosition(ConsoleLayout.MessageBoxPositionLeft + 20, ConsoleLayout.MenuBoxPositionTop + 9);
+                    Console.ForegroundColor = ConsoleColor.DarkCyan;
+                    Console.Write(information);
+
+                    //-----AGE-----//
+                    information = _gamePirate.Age.ToString();
+                    Console.SetCursorPosition(ConsoleLayout.MessageBoxPositionLeft + 19, ConsoleLayout.MenuBoxPositionTop + 10);
+                    Console.ForegroundColor = ConsoleColor.DarkCyan;
+                    Console.Write(information);
+
+                    //-----GENDER-----//
+                    information = Text.UppercaseFirst(_gamePirate.Gender.ToString());
+                    Console.SetCursorPosition(ConsoleLayout.MessageBoxPositionLeft + 22, ConsoleLayout.MenuBoxPositionTop + 11);
+                    Console.ForegroundColor = ConsoleColor.DarkCyan;
+                    Console.Write(information);
+
+                    #endregion                    
                     break;
 
                 case PlayerAction.PirateLocationsVisited:
+                    #region ***COLORS FOR LOCATIONS VISITED SCREEN
+
+                    List<IslandLocation> visitedIslandLocations = new List<IslandLocation>();
+
+                    // add visited locations to a list
+                    foreach (int islandLocationID in _gamePirate.IslandLocationsVisited)
+                    {
+                        visitedIslandLocations.Add(_gameUniverse.GetIslandLocationById(islandLocationID));
+                    }
+
+                    //----ID----// 
+                    position = 7;
+                    foreach (IslandLocation island in visitedIslandLocations)
+                    {
+                        Console.SetCursorPosition(ConsoleLayout.MessageBoxPositionLeft + 2, ConsoleLayout.MenuBoxPositionTop + position++);
+                        Console.ForegroundColor = ConsoleColor.DarkYellow;
+                        Console.Write(island.IslandLocationID);
+                    }
+
+                    //----NAME----//      
+                    position = 7;
+                    foreach (IslandLocation island in visitedIslandLocations)
+                    {
+                        Console.SetCursorPosition(ConsoleLayout.MessageBoxPositionLeft + 12, ConsoleLayout.MenuBoxPositionTop + position++);
+                        Console.ForegroundColor = ConsoleColor.DarkCyan;
+                        Console.Write(island.CommonName);
+                    }
+
+                    #endregion
                     break;
 
                 case PlayerAction.ListDestinations:
+                    #region ***COLORS FOR LIST DESTINATIONS SCREEN
+
+                    //----ID----// 
+                    position = 7;
+                    foreach (IslandLocation island in _gameUniverse.IslandLocations)
+                    {
+                        Console.SetCursorPosition(ConsoleLayout.MessageBoxPositionLeft + 2, ConsoleLayout.MenuBoxPositionTop + position++);
+                        Console.ForegroundColor = ConsoleColor.DarkYellow;
+                        Console.Write(island.IslandLocationID);
+                    }
+
+                    //----NAME----//      
+                    position = 7;
+                    foreach (IslandLocation island in _gameUniverse.IslandLocations)
+                    {
+                        Console.SetCursorPosition(ConsoleLayout.MessageBoxPositionLeft + 12, ConsoleLayout.MenuBoxPositionTop + position++);
+                        Console.ForegroundColor = ConsoleColor.DarkCyan;
+                        Console.Write(island.CommonName);
+                    }
+
+                    #endregion
                     break;
 
                 case PlayerAction.Exit:
@@ -512,6 +742,7 @@ namespace TB_QuestGame
             DisplayGamePlayScreen("Quest Setup - Name", Text.InitializeMissionGetPirateName(), ActionMenu.InitializePlayerName, "");
             DisplayInputBoxPrompt("Enter your name: ");
             gamePirate.Name = GetString();
+            
 
             if (gamePirate.Name == "1")
             {
@@ -526,7 +757,7 @@ namespace TB_QuestGame
                     string prompt = $"Generate new Name? (Yes or No): ";
 
                     DisplayGamePlayScreen("Quest Setup - Name", Text.InitializeMissionGetRandomName(gamePirate), ActionMenu.InitializeRandomName, "");
-                    DisplayColoredText(gamePirate.Name, choosenAction, location);
+                    DisplayColoredText(gamePirate.Name ,choosenAction, location);
                     DisplayInputBoxPrompt(prompt);
                     userResponese = GetString().ToUpper();
 
@@ -651,26 +882,19 @@ namespace TB_QuestGame
         }
 
         /// <summary>
-        /// displays 'edit profile' screen
-        /// </summary>
-        public void DisplayEditPirateInfo()
-        {
-            DisplayGamePlayScreen("Edit Player Information", Text.EditPirateInfo(_gamePirate), ActionMenu.MainMenu, "");
-            EditPirateInformation(_gamePirate);
-            
-        }
-
-        /// <summary>
         /// edits player information
         /// </summary>        
-        public Player EditPirateInformation(Player gamePirate)
+        public void DisplayEditPirateInformation(string information, PlayerAction choosenAction, IslandLocation location)
         {
             string userResponse;
             bool editingInfo = true;
 
+            DisplayGamePlayScreen("Edit Player Information", Text.EditPirateInfo(_gamePirate), ActionMenu.MainMenu, "");
+            //DisplayColoredText(information, choosenAction, location);        
+
             while (editingInfo)
             {
-                DisplayInputBoxPrompt($"Enter your selection {gamePirate.Name}: ");
+                DisplayInputBoxPrompt($"Enter your selection {_gamePirate.Name}: ");
                 userResponse = GetString().ToUpper();
                 if (userResponse == "A" || userResponse == "B" || userResponse == "C")
                 {
@@ -679,35 +903,26 @@ namespace TB_QuestGame
                         case "A":
                             DisplayGamePlayScreen("Edit Player Information", $"You have selcted to edit your Name.\n" + "If you change your mind, you may enter 'Back' to be returned to the previous menu.\n", ActionMenu.MainMenu, "");
                             DisplayInputBoxPrompt($"Enter your new name: ");
-                            gamePirate.Name = GetString();
+                            _gamePirate.Name = GetString();
                             editingInfo = false;
-                            return gamePirate;
+                            break;
+                           
 
                         case "B":
                             int pirateAge = 0;
                             DisplayGamePlayScreen("Edit Player Information", $"You have selcted to edit your Age.\n" + "If you change your mind, you may enter 'Back' to be returned to the previous menu.\n", ActionMenu.MainMenu, "");
                             DisplayInputBoxPrompt($"Enter your new age: ");
-                            GetInteger($"Enter your age {gamePirate.Name}: ", 0, 1000000, out pirateAge);
-                            gamePirate.Age = pirateAge;
+                            GetInteger($"Enter your age {_gamePirate.Name}: ", 0, 1000000, out pirateAge);
+                            _gamePirate.Age = pirateAge;
                             editingInfo = false;
-                            return gamePirate;
+                            break;
 
                         case "C":
                             DisplayGamePlayScreen("Edit Player Information", $"You have selcted to edit your Gender.\n" + "If you change your mind, you may enter 'Back' to be returned to the previous menu.\n", ActionMenu.MainMenu, "");
                             DisplayInputBoxPrompt($"Enter your new gender: ");
-                            gamePirate.Gender = GetGender();
+                            _gamePirate.Gender = GetGender();
                             editingInfo = false;
-                            return gamePirate;
-
-                        case "1":
-                            DisplayPirateInfo();
-                            editingInfo = false;
-                            break;
-
-                        case "4":
-                            DisplayClosingScreen();
-                            editingInfo = false;
-                            break;
+                            break; ;                 
 
                         default:
                             break;
@@ -717,10 +932,9 @@ namespace TB_QuestGame
                 {
                     ClearInputBox();
                     DisplayInputErrorMessage("You must enter a correct corresponding letter. Please try again.");
-                    DisplayInputBoxPrompt($"Enter your selection {gamePirate.Name}: ");
+                    DisplayInputBoxPrompt($"Enter your selection, {_gamePirate.Name}: ");
                 }
-            }
-            return gamePirate;
+            }            
         }
 
         /// <summary>
@@ -772,28 +986,29 @@ namespace TB_QuestGame
         /// <summary>
         /// displays information pertaining to the current location
         /// </summary>
-        public void  DisplayLookAround()
+        public void DisplayLookAround()
         {
             IslandLocation currentIslandLocation = _gameUniverse.GetIslandLocationById(_gamePirate.IslandLocationId);
-            DisplayGamePlayScreen("Current Location", Text.LookAround(currentIslandLocation),ActionMenu.MainMenu, "");
+            DisplayGamePlayScreen("Current Location - Look Around", Text.LookAround(currentIslandLocation),ActionMenu.MainMenu, "");
         }
 
         /// <summary>
         /// gets a location ID and confirms if it's valid
         /// </summary>        
-        public int DisplayGetNextIslandLocation()
+        public int DisplayGetNextIslandLocation(PlayerAction choosenAction, IslandLocation location)
         {
             int islandLocationId = 0;
             bool validIslandLocationId = false;
 
             DisplayGamePlayScreen("Travel to a new Island", Text.Travel(_gamePirate, _gameUniverse.IslandLocations), ActionMenu.MainMenu, "");
+            DisplayColoredText("", choosenAction, location);
 
             while (!validIslandLocationId)
             {
                 //
                 // get and integer from the user
                 //
-                GetInteger($"Enter your new location {_gamePirate.Name}: ", 1, _gameUniverse.GetMaxIslandLocationId(), out islandLocationId);
+                GetInteger($"Enter your new location {_gamePirate.Name}: ", 0, _gameUniverse.GetMaxIslandLocationId(), out islandLocationId);
 
                 //
                 // validate choosen integer and determine accessbility level
@@ -818,6 +1033,21 @@ namespace TB_QuestGame
             }
 
             return islandLocationId;
+        }
+
+        /// <summary>
+        /// displays all locations that the player has already visited
+        /// </summary>
+        public void DisplayLocationsVisited()
+        {
+            List<IslandLocation> visitedIslandLocations = new List<IslandLocation>();
+
+            foreach (int islandLocationID in _gamePirate.IslandLocationsVisited)
+            {
+                visitedIslandLocations.Add(_gameUniverse.GetIslandLocationById(islandLocationID));
+            }
+
+            DisplayGamePlayScreen("Islands Visited", Text.VisitedLocations(visitedIslandLocations), ActionMenu.MainMenu, "");
         }
 
         #endregion

@@ -15,7 +15,7 @@ namespace TB_QuestGame
         // splash screen colors
         //
         public static ConsoleColor SplashScreenBackgroundColor = ConsoleColor.DarkCyan;
-        public static ConsoleColor SplashScreenForegroundColor = ConsoleColor.Yellow;
+        public static ConsoleColor SplashScreenForegroundColor = ConsoleColor.Green;
 
         //
         // main console window colors
@@ -27,13 +27,13 @@ namespace TB_QuestGame
         // console window header colors
         //
         public static ConsoleColor HeaderBackgroundColor = ConsoleColor.DarkCyan;
-        public static ConsoleColor HeaderForegroundColor = ConsoleColor.Gray;
+        public static ConsoleColor HeaderForegroundColor = ConsoleColor.White;
 
         //
         // console window footer colors
         //
         public static ConsoleColor FooterBackgroundColor = ConsoleColor.DarkCyan;
-        public static ConsoleColor FooterForegroundColor = ConsoleColor.Gray;
+        public static ConsoleColor FooterForegroundColor = ConsoleColor.White;
 
         //
         // menu box colors
@@ -46,7 +46,7 @@ namespace TB_QuestGame
         // message box colors
         //
         public static ConsoleColor MessageBoxBackgroundColor = ConsoleColor.Black;
-        public static ConsoleColor MessageBoxForegroundColor = ConsoleColor.DarkYellow;
+        public static ConsoleColor MessageBoxForegroundColor = ConsoleColor.DarkGray;
         public static ConsoleColor MessageBoxBorderColor = ConsoleColor.DarkYellow;
         public static ConsoleColor MessageBoxHeaderBackgroundColor = ConsoleColor.DarkCyan;
         public static ConsoleColor MessageBoxHeaderForegroundColor = ConsoleColor.Yellow;

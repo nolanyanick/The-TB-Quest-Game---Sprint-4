@@ -90,10 +90,11 @@ namespace TB_QuestGame
 
         }
 
-        public Character(string name, GenderType race)
+        public Character(string name, GenderType race, int islandLocationID)
         {
             _name = name;
             _gender= race;
+            _islandLocationId = islandLocationID;
         }
 
         #endregion

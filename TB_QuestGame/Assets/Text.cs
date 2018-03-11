@@ -154,10 +154,10 @@ namespace TB_QuestGame
                 "It appears we have all the necessary information to begin your game! You will find it" +
                 " listed below.\n" +
                 " \n" +
-                $"\tPirate Name: {gamePirate.Name}\n" +
-                $"\tPirate Age: {gamePirate.Age}\n" +
-                $"\tPirate Gender: {gamePirate.Gender}\n" +
-                $"\tPirate Personality: {gamePirate.PersonlityDescription()}\n" +
+                $"\tPirate Name: \n" +
+                $"\tPirate Age: \n" +
+                $"\tPirate Gender: \n" +
+                $"\tPirate Personality: \n" +
                 " \n" +
                 "Press any key to begin your quest.";
 
@@ -187,19 +187,19 @@ namespace TB_QuestGame
             }
 
             string messageBoxText =
-                $"\tPirate Name: {gamePirate.Name}\n" +
-                $"\tPirate Age: {gamePirate.Age}\n" +
-                $"\tPirate Gender: {UppercaseFirst(gamePirate.Gender.ToString())}\n" +
-                $"\tPirate Personality: {gamePirate.PersonlityDescription()}\n" +
+                $"\tPirate Name: \n" +
+                $"\tPirate Age: \n" +
+                $"\tPirate Gender: \n" +
+                $"\tPirate Personality: \n" +
                 $"\tPirate's Greeting: {gamePirate.Greeting()}\n" +
                 " \n" +               
                 " \n" +
                 $"\tInventory:\n" +
                 " \n" +
-                $"\tCoin: {gamePirate.Coin}\n" +
-                $"\tWeapon: {UppercaseFirst(gamePirate.Weapon.ToString())}\n" +
-                $"\tShip Name: {pirateShipName}\n" + 
-                $"\tShip: {gamePirate.ShipInfo(gamePirate)}\n" +
+                $"\tCoin: \n" +
+                $"\tWeapon: \n" +
+                $"\tShip Name: \n" + 
+                $"\tShip: \n" +
                 " \n";
 
             return messageBoxText;
@@ -218,11 +218,11 @@ namespace TB_QuestGame
                //"or to return to the previous one. \n" +
                " \n" +
                " \n" +
-               $"\tCurrent Information for: {gamePirate.Name}\n" +
+               $"\tCurrent Information for: \n" +
                " \n" +             
-               $"\tPirate Name: {gamePirate.Name}\n" +
-               $"\tPirate Age: {gamePirate.Age}\n" +
-               $"\tPirate Gender: {UppercaseFirst(gamePirate.Gender.ToString())}\n" +
+               $"\tPirate Name: \n" +
+               $"\tPirate Age: \n" +
+               $"\tPirate Gender: \n" +
                " \n" +
                " \n" +
                "\tOptions:\n" +               
@@ -248,19 +248,6 @@ namespace TB_QuestGame
             "ID".PadRight(10) + "Name".PadRight(30) + " \n" +
             "---".PadRight(10) + "-----------------------".PadRight(30) + " \n";
 
-            // display all locations
-            //
-            string islandLocationList = null;
-            foreach (IslandLocation island in islandLocations)
-            {
-                islandLocationList +=
-                    $"{island.IslandLocationID}".PadRight(10) +
-                    $"{island.CommonName}".PadRight(30) +
-                    Environment.NewLine;
-            }
-
-            messageBox += islandLocationList;
-
             return messageBox;
         }
 
@@ -270,8 +257,12 @@ namespace TB_QuestGame
         /// </summary>      
         public static string LookAround(IslandLocation islandLocation)
         {
-            string messageBox = $"Current Location: {islandLocation.CommonName}\n" +
+            string messageBox = 
+                $"Current Location: \n" +
+                "Coordinates: \n" +
                 " \n" +
+                " \n" +             
+                
                 islandLocation.GeneralContents;
 
             return messageBox;
@@ -330,6 +321,24 @@ namespace TB_QuestGame
                 islandLocation.Description;            
 
             return messageBox;
+        }
+
+        /// <summary>
+        /// displays all island locations that have been visited by the player
+        /// </summary>        
+        public static string VisitedLocations(IEnumerable<IslandLocation> islandLocation)
+        {
+            string meassageBox = 
+                "Islands you've Visited\n" +
+                " \n" +
+
+                //
+                // display table header
+                //
+                "ID".PadRight(10) + "Name".PadRight(30) + " \n" +
+                "---".PadRight(10) + "--------------".PadRight(30) + " \n";
+
+            return meassageBox;
         }
 
         #endregion
