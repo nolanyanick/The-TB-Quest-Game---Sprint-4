@@ -363,7 +363,7 @@ namespace TB_QuestGame
             string backgroundColorString = new String(' ', ConsoleLayout.InputBoxWidth - 4);
 
             Console.ForegroundColor = ConsoleTheme.InputBoxBackgroundColor;
-            for (int row = 1; row < ConsoleLayout.InputBoxHeight - 2; row++)
+            for (int row = 1; row < ConsoleLayout.InputBoxHeight -2; row++)
             {
                 Console.SetCursorPosition(ConsoleLayout.InputBoxPositionLeft + 4, ConsoleLayout.InputBoxPositionTop + row);
                 DisplayInputBoxPrompt(backgroundColorString);
@@ -884,13 +884,13 @@ namespace TB_QuestGame
         /// <summary>
         /// edits player information
         /// </summary>        
-        public void DisplayEditPirateInformation(string information, PlayerAction choosenAction, IslandLocation location)
+        public void DisplayEditPirateInformation()
         {
             string userResponse;
             bool editingInfo = true;
 
             DisplayGamePlayScreen("Edit Player Information", Text.EditPirateInfo(_gamePirate), ActionMenu.MainMenu, "");
-            //DisplayColoredText(information, choosenAction, location);        
+            DisplayColoredText("", PlayerAction.EditPlayerInfo, _gameUniverse.IslandLocations[0]);        
 
             while (editingInfo)
             {
@@ -995,13 +995,13 @@ namespace TB_QuestGame
         /// <summary>
         /// gets a location ID and confirms if it's valid
         /// </summary>        
-        public int DisplayGetNextIslandLocation(PlayerAction choosenAction, IslandLocation location)
+        public int DisplayGetNextIslandLocation()
         {
             int islandLocationId = 0;
             bool validIslandLocationId = false;
 
             DisplayGamePlayScreen("Travel to a new Island", Text.Travel(_gamePirate, _gameUniverse.IslandLocations), ActionMenu.MainMenu, "");
-            DisplayColoredText("", choosenAction, location);
+            DisplayColoredText("", PlayerAction.Travel, _gameUniverse.IslandLocations[0]);
 
             while (!validIslandLocationId)
             {
@@ -1021,8 +1021,58 @@ namespace TB_QuestGame
                     }
                     else
                     {
-                        ClearInputBox();
-                        DisplayInputErrorMessage("It appears you attempted to travel to inaccessible location. Please try again.");
+                        // display a specfic error message based on the choosen ID/location
+                        switch(islandLocationId)
+                        {
+                            case 3:
+                                #region ***ISLA DE LA MUERTE
+                                
+                                    ClearInputBox();
+                                    DisplayInputErrorMessage("More XP, or a strong ship and crew are needed to travel to here. Please try again. ");
+                                    break;
+                                
+                                #endregion
+                            case 4:
+                                #region ***MONARCH BAY
+                                
+                                    ClearInputBox();
+                                    DisplayInputErrorMessage("Monarch Bay is expensive. More Coin is needed to travel to here. Please try again. ");
+                                    break;
+                                
+                                #endregion 
+                            case 5:
+                                #region ***ISLE DU SOLEIL
+                                
+                                    ClearInputBox();
+                                    DisplayInputErrorMessage("A special object is required to navigate these dangerous waters. Please try again. ");
+                                    break;                                
+
+                                #endregion
+                            case 6:
+                                #region ***RENEGADE'S BEACH
+
+                                    ClearInputBox();
+                                    DisplayInputErrorMessage("You need a strong ship to travel and defend against pirates here. Please try again.");                                    
+                                    break;                                
+
+                                #endregion
+                            case 7:
+                                #region ***SHIPWRECK COVE
+
+                                    ClearInputBox();
+                                    DisplayInputErrorMessage("A small ship is needed to maneuver through these crowded waters. Please try again. ");
+                                    break;
+
+                                #endregion
+                            default:
+                                #region ***DEFAULT
+
+                                ClearInputBox();
+                                DisplayInputErrorMessage("It appears you attempted to travel to inaccessible location. Please try again.");
+
+                                #endregion
+                                break;
+                        }                        
                     }
                 }
                 else

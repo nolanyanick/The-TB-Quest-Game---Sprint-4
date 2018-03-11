@@ -117,9 +117,13 @@ namespace TB_QuestGame
                         break;
 
                     case PlayerAction.EditPlayerInfo:                       
-                        _gameConsoleView.DisplayEditPirateInformation(_currentLocation.CommonName, travelerActionChoice, _currentLocation);
-                        _gameConsoleView.DisplayColoredText("", travelerActionChoice, _currentLocation);
-                        _gameConsoleView.DisplayGamePlayScreen("Current Location", Text.CurrrentLocationInfo(), ActionMenu.MainMenu, "");
+                        _gameConsoleView.DisplayEditPirateInformation();
+
+                        //
+                        // display game play screen with current location info and coordiantes
+                        //
+                        _gameConsoleView.DisplayGamePlayScreen("Current Location", Text.CurrentLocationInfo(_currentLocation), ActionMenu.MainMenu, "");
+                        _gameConsoleView.DisplayColoredText("", PlayerAction.LookAround, _currentLocation);
                         break;
 
                     case PlayerAction.PlayerInfo:
@@ -156,7 +160,7 @@ namespace TB_QuestGame
                         //
                         // get new location choice and update current location
                         //
-                        _gamePirate.IslandLocationId = _gameConsoleView.DisplayGetNextIslandLocation(travelerActionChoice, _currentLocation);
+                        _gamePirate.IslandLocationId = _gameConsoleView.DisplayGetNextIslandLocation();
                         _currentLocation = _gameUniverse.GetIslandLocationById(_gamePirate.IslandLocationId);                        
 
                         //
@@ -207,11 +211,12 @@ namespace TB_QuestGame
             _gamePirate.Name = "Bill";
 
             // default player inventroy
-            _gamePirate.ShipName = "Big Bessie";
+            //_gamePirate.ShipName = "Big Bessie";
             _gamePirate.ShipOwner = true;
-            _gamePirate.Coin = 1000000;
-            _gamePirate.Weapon = Player.WeaponType.DYNAMITE;
-            _gamePirate.Ship = Player.ShipType.BritishManOWar;
+            _gamePirate.Crew.Add("First Mate");
+            _gamePirate.Coin = 0;
+            _gamePirate.Weapon = Player.WeaponType.FISTS;
+            _gamePirate.Ship = Player.ShipType.Merchant;
 
             //
             // default player stats
@@ -239,6 +244,83 @@ namespace TB_QuestGame
                 // add a new location to visited list
                 //
                 _gamePirate.IslandLocationsVisited.Add(_currentLocation.IslandLocationID);
+
+                //
+                // update island accessibility
+                //
+                #region ---Islands---
+
+                #region ***ISLA DE LA MUERTE
+
+                if (_gamePirate.ExperiencePoints > 10000 || _gamePirate.Crew.Count >= 5)
+                {
+                    _gameUniverse.IslandLocations[3].Accessible = true;
+                }
+                else
+                {
+                    _gameUniverse.IslandLocations[3].Accessible = false;
+
+                }
+
+                #endregion
+
+                #region ***MONARCH BAY
+
+                if (_gamePirate.Coin > 10000)
+                {
+                    _gameUniverse.IslandLocations[4].Accessible = true;
+                }
+                else
+                {
+                    _gameUniverse.IslandLocations[4].Accessible = false;
+
+                }
+
+                #endregion
+                
+                #region ***ISLE DU SOLEIL
+
+                if (_gamePirate.ExperiencePoints > 999999999)
+                {
+                    _gameUniverse.IslandLocations[5].Accessible = true;
+                }
+                else
+                {
+                    _gameUniverse.IslandLocations[5].Accessible = false;
+
+                }
+
+                #endregion
+                
+                #region ***RENEGADE'S BEACH
+
+                if (_gamePirate.Ship == Player.ShipType.BritishManOWar || _gamePirate.Ship == Player.ShipType.SpanishGalleon)
+                {
+                    _gameUniverse.IslandLocations[6].Accessible = true;
+                }
+                else
+                {
+                    _gameUniverse.IslandLocations[6].Accessible = false;
+
+                }
+
+                #endregion
+                
+                #region ***SHIPWRECK COVE
+
+                if (_gamePirate.Ship == Player.ShipType.Sloop)
+                {
+                    _gameUniverse.IslandLocations[7].Accessible = true;
+                }
+                else
+                {
+                    _gameUniverse.IslandLocations[7].Accessible = false;
+
+                }
+
+                #endregion
+
+                #endregion
 
                 //
                 // add experience points for visiting locations

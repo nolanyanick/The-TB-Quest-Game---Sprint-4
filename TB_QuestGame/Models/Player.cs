@@ -103,11 +103,13 @@ namespace TB_QuestGame
         public Player()
         {
             _islandLocationsVisited = new List<int>();
+            _crew = new List<string>();
         }
 
         public Player(string name, GenderType gender, int islandLocationID) : base(name, gender, islandLocationID)
         {
             _islandLocationsVisited = new List<int>();
+            _crew = new List<string>();
         }
 
         #endregion

@@ -11,6 +11,9 @@ namespace TB_QuestGame
     /// </summary>
     public static class UniverseObjects
     {
+        /// <summary>
+        /// list of island locations with properties
+        /// </summary>
         public static List<IslandLocation> IslandLocations = new List<IslandLocation>()
         {
             //port royal
@@ -28,7 +31,11 @@ namespace TB_QuestGame
                     "smaller shacks tucked away in the alleys. It's currently high noon making the port " +
                     "seem like a tropical paradise. There are countless people, " +
                     "ranging from English calvarymen to commonfolk and pirates, all  " +
-                    "soaking up the sun and roaming the streets.",
+                    "soaking up the sun and roaming the streets." +
+                    " \n" +
+                    " \n" +
+                    " \n" +
+                    "- stuff/NPC's located in town to be included -",
                 Accessible = true,
                 ExperiencePoints = 10
             },
@@ -47,9 +54,9 @@ namespace TB_QuestGame
                 GeneralContents = "As you make your way through the swampy island of Tortuga, you notice  " +
                     "that this island consists of mostly pirates and renegades, you should do your best " +
                     "to avoid everyone, unless you're looking for a fight." +
-                    "" +
-                    "" +
-                    "" +
+                    " \n" +
+                    " \n" +
+                    " \n" +
                     "- stuff/NPC's located in town to be included -",
                 Accessible = true,
                 ExperiencePoints = 10
@@ -62,17 +69,17 @@ namespace TB_QuestGame
                 IslandLocationID = 2,
                 Date = 386759,
                 Coordinates = "44.2312° N, 76.4860° W",
-                Description = "Kingston is a beautful town surrounded by the Blue Mountains, Red Hills, Long Mountain " +
-                    "and the Kingston Harbour. Much like Port Royal, Kingston also resembles a trpoical paradise.",
+                Description = "Kingston is a beautful town surrounded by the Blue Mountains, Red Hills, Long Mountains " +
+                    "and the Kingston Harbour. Much like Port Royal, Kingston also resembles a tropical paradise.",
                 GeneralContents = "Kingston is a semi-large town known for it's numerous markets where seemingly endless " +
-                    "amounts of goods and servcies of all kinds are bought and sold." +
+                    "amounts of goods and servcies of all kinds are bought and sold. " +
                     "Becasue of this, Kingston is often filled with traders, travelers, pirates, etc. " +
                     "all here to experience the trading hotbed." +
-                    "" +
-                    "" +
-                    "" +
+                    " \n" +
+                    " \n" +
+                    " \n" +
                     "- stuff/NPC's located in town to be included -",
-                Accessible = false,
+                Accessible = true,
                 ExperiencePoints = 20
             },
 
@@ -91,10 +98,10 @@ namespace TB_QuestGame
                 GeneralContents = "There are some small villages located throughout the island, " +
                     "but all abondoned or occupied by pirates and the waters surrounding the island " +
                     "are litered with pirate ships. It is said that the famed Blackbeard makes his home " +
-                    "here; his ship, 'Queen Anne's Revenge', is often spotted sailing to and from Isla de la Muerte." +                    
-                    "" +
-                    "" +
-                    "" +
+                    "here; his ship, 'Queen Anne's Revenge', is often spotted sailing to and from Isla de la Muerte." +
+                    " \n" +
+                    " \n" +
+                    " \n" +
                     "- stuff/NPC's located in town to be included -",
                 Accessible = false,
                 ExperiencePoints = 10
@@ -113,15 +120,15 @@ namespace TB_QuestGame
                     "flowers, tropical plants/trees, crystal clear waters, and constant sunshine.",                    
                 GeneralContents = "Monarch Bay acts as a resort for the affluent and wealthy, but at the expense of the locals. However," +
                     "because of that the bay is heavily guarded, provding protection for local villagers, but also a goldmine for pirates.\n" +
-                    "" +
-                    "" +
-                    "" +
-                    "- stuff/NPC's located in the bay to be included -",
-                Accessible = true,
+                    " \n" +
+                    " \n" +
+                    " \n" +
+                    "- stuff/NPC's located in town to be included -",
+                Accessible = false,
                 ExperiencePoints = 10
             },
 
-            //isle du soleil
+            //isle du soleil - modify
             new IslandLocation
             {
                 CommonName = "Île du Soleil",
@@ -138,7 +145,7 @@ namespace TB_QuestGame
                 ExperiencePoints = 10
             },
 
-            //renegade's cove
+            //renegade's beach - modify
             new IslandLocation
             {
                 CommonName = "Renegade's Beach",
@@ -155,7 +162,7 @@ namespace TB_QuestGame
                 ExperiencePoints = 10
             },
 
-            //shipwreck beach
+            //shipwreck cove - modify
             new IslandLocation
             {
                 CommonName = "Shipwreck Cove",
