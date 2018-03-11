@@ -54,7 +54,7 @@ namespace TB_QuestGame
             _gameUniverse = new Universe();
             _gameConsoleView = new ConsoleView(_gamePirate, _gameUniverse);
             _playingGame = true;
-
+           
             Console.CursorVisible = false;
         }
 
@@ -87,7 +87,7 @@ namespace TB_QuestGame
             //
             // initialize the mission traveler
             // 
-            InitializeMission(travelerActionChoice);
+            InitializeMission();
 
             //
             // prepare game play screen
@@ -118,22 +118,23 @@ namespace TB_QuestGame
 
                     case PlayerAction.EditPlayerInfo:                       
                         _gameConsoleView.DisplayEditPirateInformation(_currentLocation.CommonName, travelerActionChoice, _currentLocation);
+                        _gameConsoleView.DisplayColoredText("", travelerActionChoice, _currentLocation);
                         _gameConsoleView.DisplayGamePlayScreen("Current Location", Text.CurrrentLocationInfo(), ActionMenu.MainMenu, "");
                         break;
 
                     case PlayerAction.PlayerInfo:
                         _gameConsoleView.DisplayPirateInfo();
-                        _gameConsoleView.DisplayColoredText(_currentLocation.CommonName, travelerActionChoice, _currentLocation);
+                        _gameConsoleView.DisplayColoredText("", travelerActionChoice, _currentLocation);
                         break;
 
                     case PlayerAction.ListDestinations:
                         _gameConsoleView.DisplayListOfIslandLocations();
-                        _gameConsoleView.DisplayColoredText(_currentLocation.CommonName, travelerActionChoice, _currentLocation);
+                        _gameConsoleView.DisplayColoredText("", travelerActionChoice, _currentLocation);
                         break;
 
                     case PlayerAction.LookAround:
                         _gameConsoleView.DisplayLookAround();
-                        _gameConsoleView.DisplayColoredText(_currentLocation.CommonName, travelerActionChoice, _currentLocation);
+                        _gameConsoleView.DisplayColoredText("", travelerActionChoice, _currentLocation);
                         break;
 
                     case PlayerAction.Travel:
@@ -162,12 +163,12 @@ namespace TB_QuestGame
                         // display game play screen with current location info and coordiantes
                         //
                         _gameConsoleView.DisplayGamePlayScreen("Current Location", Text.CurrentLocationInfo(_currentLocation), ActionMenu.MainMenu, "");
-                        _gameConsoleView.DisplayColoredText(_currentLocation.CommonName, PlayerAction.LookAround, _currentLocation);
+                        _gameConsoleView.DisplayColoredText("", PlayerAction.LookAround, _currentLocation);
                         break;
 
                     case PlayerAction.PirateLocationsVisited:
                         _gameConsoleView.DisplayLocationsVisited();
-                        _gameConsoleView.DisplayColoredText(_currentLocation.CommonName, travelerActionChoice, _currentLocation);                    
+                        _gameConsoleView.DisplayColoredText("", travelerActionChoice, _currentLocation);                    
                         break;
 
                     case PlayerAction.Exit:
@@ -189,32 +190,41 @@ namespace TB_QuestGame
         /// <summary>
         /// initialize the player info
         /// </summary>
-        private void InitializeMission(PlayerAction choosenAction)
+        private void InitializeMission()
         {
-            //Player pirate = _gameConsoleView.GetInitialPirateInfo();
-            Player pirate = new Player();
+            //Player pirate = _gameConsoleView.GetInitialPirateInfo();            
 
+            //// player information
             //_gamePlayer.Age = pirate.Age;
             //_gamePlayer.Gender = pirate.Gender;
             //_gamePlayer.Personality = pirate.Personality;
+            //_gamePirate.Name = _gameConsoleView.GetPirateName(pirate, PlayerAction.None, _currentLocation);
 
-            _gamePirate.Name = _gameConsoleView.GetPirateName(pirate, choosenAction, _currentLocation);
+            // player information
             _gamePirate.Age = 50;
             _gamePirate.Gender = Character.GenderType.MALE;
             _gamePirate.Personality = true;
-            //_gamePlayer.Name = "Bill";
+            _gamePirate.Name = "Bill";
 
-            _gamePirate.ShipName = "Queen Anne's Revenge";
+            // default player inventroy
+            _gamePirate.ShipName = "Big Bessie";
             _gamePirate.ShipOwner = true;
             _gamePirate.Coin = 1000000;
             _gamePirate.Weapon = Player.WeaponType.DYNAMITE;
             _gamePirate.Ship = Player.ShipType.BritishManOWar;
 
             //
+            // default player stats
+            //
+            _gamePirate.ExperiencePoints = 0;
+            _gamePirate.Health = 100;
+            _gamePirate.Lives = 3;
+
+            //
             // echo the pirates's info
             //
-           _gameConsoleView.DisplayGamePlayScreen("Quest Setup - Complete", Text.InitializeMissionEchoPirateInfo(pirate), ActionMenu.MissionIntro, "");
-           _gameConsoleView.DisplayColoredText("", choosenAction, _currentLocation);
+            _gameConsoleView.DisplayGamePlayScreen("Quest Setup - Complete", Text.InitializeMissionEchoPirateInfo(_gamePirate), ActionMenu.MissionIntro, "");
+            _gameConsoleView.DisplayColoredText("", PlayerAction.None, _currentLocation);
             _gameConsoleView.GetContinueKey();
         }
 
@@ -229,12 +239,13 @@ namespace TB_QuestGame
                 // add a new location to visited list
                 //
                 _gamePirate.IslandLocationsVisited.Add(_currentLocation.IslandLocationID);
+
+                //
+                // add experience points for visiting locations
+                //
+                _gamePirate.ExperiencePoints += _currentLocation.ExperiencePoints;
             }
         }
-
-
-
-
 
         #endregion
     }

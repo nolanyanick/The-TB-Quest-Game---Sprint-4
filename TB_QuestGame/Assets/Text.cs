@@ -60,6 +60,17 @@ namespace TB_QuestGame
             return messageBoxText;
         }
 
+        public static List<string> StatusBox(Player gamePirate, Universe universe) 
+        {
+            List<string> statusBoxText = new List<string>();
+
+            statusBoxText.Add($"Experience Points: {gamePirate.ExperiencePoints}\n");
+            statusBoxText.Add($"Health: {gamePirate.Health}\n");
+            statusBoxText.Add($"Lives: {gamePirate.Lives}\n");
+
+            return statusBoxText;
+        }
+
         #region Initialize Mission Text
 
         public static string InitializeMissionIntro()

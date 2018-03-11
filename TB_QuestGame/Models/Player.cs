@@ -30,20 +30,17 @@ namespace TB_QuestGame
 
         private bool _shipOwner;
         private int _age;
-        private ShipType _ship;
-        private List<string> _crew;        
+        private int _health;
+        private int _lives;
+        private int _experiencePoints;
         private string _shipName;
+        private ShipType _ship;
+        private List<string> _crew;
         private List<int> _islandLocationsVisited;
 
         #endregion
 
         #region PROPERTIES
-
-        public List<string> Crew
-        {
-            get { return _crew; }
-            set { _crew = value; }
-        }
 
         public bool ShipOwner
         {
@@ -57,7 +54,24 @@ namespace TB_QuestGame
             set { _age = value; }
         }
 
-             
+        public int ExperiencePoints
+        {
+            get { return _experiencePoints; }
+            set { _experiencePoints = value; }
+        }
+
+        public int Lives
+        {
+            get { return _lives; }
+            set { _lives = value; }
+        }
+
+        public int Health
+        {
+            get { return _health; }
+            set { _health = value; }
+        }
+
         public string ShipName
         {
             get { return _shipName; }
@@ -68,6 +82,12 @@ namespace TB_QuestGame
         {
             get { return _ship; }
             set { _ship = value; }
+        }
+
+        public List<string> Crew
+        {
+            get { return _crew; }
+            set { _crew = value; }
         }
 
         public List<int> IslandLocationsVisited
