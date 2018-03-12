@@ -196,27 +196,25 @@ namespace TB_QuestGame
         /// </summary>
         private void InitializeMission()
         {
-            //Player pirate = _gameConsoleView.GetInitialPirateInfo();            
-
-            //// player information
-            //_gamePlayer.Age = pirate.Age;
-            //_gamePlayer.Gender = pirate.Gender;
-            //_gamePlayer.Personality = pirate.Personality;
-            //_gamePirate.Name = _gameConsoleView.GetPirateName(pirate, PlayerAction.None, _currentLocation);
+            Player pirate = _gameConsoleView.GetInitialPirateInfo();            
 
             // player information
-            _gamePirate.Age = 50;
-            _gamePirate.Gender = Character.GenderType.MALE;
-            _gamePirate.Personality = true;
-            _gamePirate.Name = "Bill";
+            _gamePirate.Age = pirate.Age;
+            _gamePirate.Gender = pirate.Gender;
+            _gamePirate.Personality = pirate.Personality;
+            _gamePirate.Name = _gameConsoleView.GetPirateName(pirate, PlayerAction.None, _currentLocation);
 
-            // default player inventroy
-            //_gamePirate.ShipName = "Big Bessie";
-            _gamePirate.ShipOwner = true;
-            _gamePirate.Crew.Add("First Mate");
+            // player information
+            //_gamePirate.Age = 50;
+            //_gamePirate.Gender = Character.GenderType.MALE;
+            //_gamePirate.Personality = true;
+            //_gamePirate.Name = "Bill";
+
+            // default player inventroy            
+            _gamePirate.ShipOwner = true;            
             _gamePirate.Coin = 0;
             _gamePirate.Weapon = Player.WeaponType.FISTS;
-            _gamePirate.Ship = Player.ShipType.Merchant;
+            _gamePirate.Ship = Player.ShipType.Frigate;
 
             //
             // default player stats

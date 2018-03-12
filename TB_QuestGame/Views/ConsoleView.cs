@@ -11,13 +11,25 @@ namespace TB_QuestGame
     /// </summary>
     public class ConsoleView
     {
+        #region ENUMS
+
+        public enum ViewStatus
+        {
+            PirateInitialization,
+            PlayingGame
+        }
+
+        #endregion
+
         #region FIELDS
 
         //
         // declare game objects for the ConsoleView object to use
         //
         Player _gamePirate;
-        Universe _gameUniverse;                     
+        Universe _gameUniverse;
+
+        ViewStatus _viewStatus;
 
         #endregion
 
@@ -34,6 +46,8 @@ namespace TB_QuestGame
         {
             _gamePirate = gameTraveler;
             _gameUniverse = gameUniverse;
+
+            _viewStatus = ViewStatus.PirateInitialization;
 
             InitializeDisplay();
         }
@@ -63,6 +77,7 @@ namespace TB_QuestGame
 
             DisplayMessageBox(messageBoxHeaderText, messageBoxText);
             DisplayMenuBox(menu);
+            DisplayStatusBox();
             DisplayInputBox();
         }
 
@@ -313,6 +328,64 @@ namespace TB_QuestGame
                 Console.Write(messageTextLine);
                 row++;
             }            
+        }
+
+        /// <summary>
+        /// draw the status box on the game screen
+        /// </summary>
+        public void DisplayStatusBox()
+        {         
+            Console.BackgroundColor = ConsoleTheme.StatusBoxBackgroundColor;
+            Console.ForegroundColor = ConsoleTheme.StatusBoxBorderColor;
+
+            //
+            // display the outline for the status box
+            //
+            ConsoleWindowHelper.DisplayBoxOutline(
+                ConsoleLayout.StatusBoxPositionTop,
+                ConsoleLayout.StatusBoxPositionLeft,
+                ConsoleLayout.StatusBoxWidth,
+                ConsoleLayout.StatusBoxHeight);
+
+            //
+            // display the text for the status box if playing game
+            //
+            if (_viewStatus == ViewStatus.PlayingGame)
+            {
+                //
+                // display status box header with title
+                //
+                Console.BackgroundColor = ConsoleTheme.StatusBoxBorderColor;
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.SetCursorPosition(ConsoleLayout.StatusBoxPositionLeft + 2, ConsoleLayout.StatusBoxPositionTop + 1);
+                Console.Write(ConsoleWindowHelper.Center("Game Stats", ConsoleLayout.StatusBoxWidth - 4));
+                Console.BackgroundColor = ConsoleTheme.StatusBoxBackgroundColor;
+                Console.ForegroundColor = ConsoleTheme.StatusBoxForegroundColor;
+
+                //
+                // display stats
+                //
+                int startingRow = ConsoleLayout.StatusBoxPositionTop + 3;
+                int row = startingRow;
+                foreach (string statusTextLine in Text.StatusBox(_gamePirate, _gameUniverse))
+                {
+                    Console.SetCursorPosition(ConsoleLayout.StatusBoxPositionLeft + 3, row);
+                    Console.Write(statusTextLine);
+                    row++;
+                }
+            }
+            else
+            {
+                //
+                // display status box header without header
+                //
+                Console.BackgroundColor = ConsoleTheme.StatusBoxBorderColor;
+                Console.ForegroundColor = ConsoleTheme.StatusBoxForegroundColor;
+                Console.SetCursorPosition(ConsoleLayout.StatusBoxPositionLeft + 2, ConsoleLayout.StatusBoxPositionTop + 1);
+                Console.Write(ConsoleWindowHelper.Center("", ConsoleLayout.StatusBoxWidth - 4));
+                Console.BackgroundColor = ConsoleTheme.StatusBoxBackgroundColor;
+                Console.ForegroundColor = ConsoleTheme.StatusBoxForegroundColor;
+            }
         }
 
         /// <summary>
@@ -725,7 +798,7 @@ namespace TB_QuestGame
                     DisplayInputBoxPrompt(prompt);
                 }
             }
-
+            
             return pirate;
         }
 
@@ -772,6 +845,12 @@ namespace TB_QuestGame
                     else if (userResponese == "NO")
                     {
                         choosingName = false;
+
+                        // 
+                        // change view status to playing game
+                        //
+                        _viewStatus = ViewStatus.PlayingGame;
+
                         return gamePirate.Name;
                     }
                     else if (userResponese == "1")
@@ -791,6 +870,12 @@ namespace TB_QuestGame
                         else
                         {
                             choosingName = false;
+
+                            // 
+                            // change view status to playing game
+                            //
+                            _viewStatus = ViewStatus.PlayingGame;
+
                             return gamePirate.Name;
                         }
                     }
@@ -804,6 +889,11 @@ namespace TB_QuestGame
                 }
 
             }
+
+            // 
+            // change view status to playing game
+            //
+            _viewStatus = ViewStatus.PlayingGame;
 
             return gamePirate.Name;
         }
