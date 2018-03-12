@@ -80,7 +80,7 @@ namespace TB_QuestGame
                     " \n" +
                     "- stuff/NPC's located in town to be included -",
                 Accessible = true,
-                ExperiencePoints = 20
+                ExperiencePoints = 10
             },
 
             //isla de la muerte

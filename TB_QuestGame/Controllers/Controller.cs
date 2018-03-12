@@ -196,7 +196,7 @@ namespace TB_QuestGame
         /// </summary>
         private void InitializeMission()
         {
-            Player pirate = _gameConsoleView.GetInitialPirateInfo();            
+            Player pirate = _gameConsoleView.GetInitialPirateInfo();
 
             // player information
             _gamePirate.Age = pirate.Age;
@@ -204,7 +204,7 @@ namespace TB_QuestGame
             _gamePirate.Personality = pirate.Personality;
             _gamePirate.Name = _gameConsoleView.GetPirateName(pirate, PlayerAction.None, _currentLocation);
 
-            // player information
+            ////player information
             //_gamePirate.Age = 50;
             //_gamePirate.Gender = Character.GenderType.MALE;
             //_gamePirate.Personality = true;
@@ -242,89 +242,89 @@ namespace TB_QuestGame
                 // add a new location to visited list
                 //
                 _gamePirate.IslandLocationsVisited.Add(_currentLocation.IslandLocationID);
-
-                //
-                // update island accessibility
-                //
-                #region ---Islands---
-
-                #region ***ISLA DE LA MUERTE
-
-                if (_gamePirate.ExperiencePoints > 10000 || _gamePirate.Crew.Count >= 5)
-                {
-                    _gameUniverse.IslandLocations[3].Accessible = true;
-                }
-                else
-                {
-                    _gameUniverse.IslandLocations[3].Accessible = false;
-
-                }
-
-                #endregion
-
-                #region ***MONARCH BAY
-
-                if (_gamePirate.Coin > 10000)
-                {
-                    _gameUniverse.IslandLocations[4].Accessible = true;
-                }
-                else
-                {
-                    _gameUniverse.IslandLocations[4].Accessible = false;
-
-                }
-
-                #endregion
                 
-                #region ***ISLE DU SOLEIL
-
-                if (_gamePirate.ExperiencePoints > 999999999)
-                {
-                    _gameUniverse.IslandLocations[5].Accessible = true;
-                }
-                else
-                {
-                    _gameUniverse.IslandLocations[5].Accessible = false;
-
-                }
-
-                #endregion
-                
-                #region ***RENEGADE'S BEACH
-
-                if (_gamePirate.Ship == Player.ShipType.BritishManOWar || _gamePirate.Ship == Player.ShipType.SpanishGalleon)
-                {
-                    _gameUniverse.IslandLocations[6].Accessible = true;
-                }
-                else
-                {
-                    _gameUniverse.IslandLocations[6].Accessible = false;
-
-                }
-
-                #endregion
-                
-                #region ***SHIPWRECK COVE
-
-                if (_gamePirate.Ship == Player.ShipType.Sloop)
-                {
-                    _gameUniverse.IslandLocations[7].Accessible = true;
-                }
-                else
-                {
-                    _gameUniverse.IslandLocations[7].Accessible = false;
-
-                }
-
-                #endregion
-
-                #endregion
-
                 //
                 // add experience points for visiting locations
                 //
                 _gamePirate.ExperiencePoints += _currentLocation.ExperiencePoints;
             }
+
+            //
+            // update island accessibility
+            //
+            #region ---Islands---
+
+            #region ***ISLA DE LA MUERTE
+
+            if (_gamePirate.ExperiencePoints > 10000 || _gamePirate.Crew.Count >= 5)
+            {
+                _gameUniverse.IslandLocations[3].Accessible = true;
+            }
+            else
+            {
+                _gameUniverse.IslandLocations[3].Accessible = false;
+
+            }
+
+            #endregion
+
+            #region ***MONARCH BAY
+
+            if (_gamePirate.Coin > 10000)
+            {
+                _gameUniverse.IslandLocations[4].Accessible = true;
+            }
+            else
+            {
+                _gameUniverse.IslandLocations[4].Accessible = false;
+
+            }
+
+            #endregion
+
+            #region ***ISLE DU SOLEIL
+
+            if (_gamePirate.ExperiencePoints > 999999999)
+            {
+                _gameUniverse.IslandLocations[5].Accessible = true;
+            }
+            else
+            {
+                _gameUniverse.IslandLocations[5].Accessible = false;
+
+            }
+
+            #endregion
+
+            #region ***RENEGADE'S BEACH
+
+            if (_gamePirate.Ship == Player.ShipType.BritishManOWar || _gamePirate.Ship == Player.ShipType.SpanishGalleon)
+            {
+                _gameUniverse.IslandLocations[6].Accessible = true;
+            }
+            else
+            {
+                _gameUniverse.IslandLocations[6].Accessible = false;
+
+            }
+
+            #endregion
+
+            #region ***SHIPWRECK COVE
+
+            if (_gamePirate.Ship == Player.ShipType.Sloop)
+            {
+                _gameUniverse.IslandLocations[7].Accessible = true;
+            }
+            else
+            {
+                _gameUniverse.IslandLocations[7].Accessible = false;
+
+            }
+
+            #endregion
+
+            #endregion
         }
 
         #endregion

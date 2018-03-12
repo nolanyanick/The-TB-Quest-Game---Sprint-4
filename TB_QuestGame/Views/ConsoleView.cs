@@ -216,7 +216,7 @@ namespace TB_QuestGame
             {
                 playing = false;
             }
-
+     
             return playing;
         }
 
@@ -238,7 +238,7 @@ namespace TB_QuestGame
             //
             ConsoleWindowHelper.InitializeConsoleWindow();
 
-            Console.CursorVisible = false;
+            Console.CursorVisible = false;            
         }
 
         /// <summary>
