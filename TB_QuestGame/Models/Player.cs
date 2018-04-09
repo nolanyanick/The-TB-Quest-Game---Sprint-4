@@ -13,16 +13,7 @@ namespace TB_QuestGame
     {
         #region ENUMERABLES
 
-        public enum ShipType
-        {
-            None,
-            Sloop,
-            Frigate,
-            Galleon,
-            BritishManOWar,
-            SpanishGalleon,
-            Merchant            
-        }
+
 
         #endregion
 
@@ -34,9 +25,19 @@ namespace TB_QuestGame
         private int _lives;
         private int _experiencePoints;
         private string _shipName;
-        private ShipType _ship;
         private List<string> _crew;
         private List<int> _islandLocationsVisited;
+        private List<GameObject> _inventory;
+        private Ship.ShipType _ship;
+
+        private List<Treasure> _treasureInventory;
+
+        public List<Treasure> TreasureInventory
+        {
+            get { return _treasureInventory; }
+            set { _treasureInventory = value; }
+        }
+
 
         #endregion
 
@@ -78,12 +79,6 @@ namespace TB_QuestGame
             set { _shipName = value; }
         }
 
-        public ShipType Ship
-        {
-            get { return _ship; }
-            set { _ship = value; }
-        }
-
         public List<string> Crew
         {
             get { return _crew; }
@@ -96,6 +91,18 @@ namespace TB_QuestGame
             set { _islandLocationsVisited = value; }
         }
 
+        public List<GameObject> Inventory
+        {
+            get { return _inventory; }
+            set { _inventory = value; }
+        }
+
+        public Ship.ShipType Ship
+        {
+            get { return _ship; }
+            set { _ship = value; }
+        }
+
         #endregion
 
         #region CONSTRUCTORS
@@ -103,12 +110,18 @@ namespace TB_QuestGame
         public Player()
         {
             _islandLocationsVisited = new List<int>();
+            _inventory = new List<GameObject>();
+            _treasureInventory = new List<Treasure>();
+
             _crew = new List<string>();
         }
 
         public Player(string name, GenderType gender, int islandLocationID) : base(name, gender, islandLocationID)
         {
             _islandLocationsVisited = new List<int>();
+            _inventory = new List<GameObject>();
+            _treasureInventory = new List<Treasure>();
+
             _crew = new List<string>();
         }
 
@@ -142,42 +155,7 @@ namespace TB_QuestGame
             }
         }
 
-        /// <summary>
-        /// displays breif informatio abut each ship type
-        /// </summary>
-        public string ShipInfo(Player gamePirate)
-        {            
-            if (_shipOwner)
-            {
-                switch (gamePirate.Ship)
-                {
-                    case ShipType.Sloop:
-                        return $"{_ship}; A small, fast, lightweight ship, ideal for speed but not for battle.";
-                        
-                    case ShipType.Frigate:
-                        return $"{_ship}; A slow, large ship designed for extended, intense battles.";
-
-                    case ShipType.Galleon:
-                        return $"{_ship}; A semi-fast large ship designed for treasure transporatation/battle.";
-
-                    case ShipType.BritishManOWar:
-                        return "British Man-O-War; A massive English Naval warship capable of devastating amounts of destruction.";
-
-                    case ShipType.SpanishGalleon:
-                        return "Spanish Galleon; An ornate Spanish warship with almost an endless amount of cargo/crew space.";
-
-                    case ShipType.Merchant:
-                        return $"{_ship}; A standard merchant ship that is fast and durable with extra space for cagro.";
-
-                    default:
-                        return $"{_ship}, it is very important you have a ship in order to succeed.";
-                }
-            }
-            else
-            {
-                return $"{_ship}, it is very important you have a ship in order to succeed.";
-            }
-        }
+        
         
         /// <summary>
         /// determines if the player has visited the island location

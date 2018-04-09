@@ -138,20 +138,32 @@ namespace TB_QuestGame
             bool validResponse = false;
             integerChoice = 0;
 
+            //
+            // validate on range if either mininumValue or maximumValue are not 0
+            //
+            bool validateRange = (minimumValue != 0 || maximumValue != 0);
+
             DisplayInputBoxPrompt(prompt);
             while (!validResponse)
             {
                 if (int.TryParse(Console.ReadLine(), out integerChoice))
                 {
-                    if (integerChoice >= minimumValue && integerChoice <= maximumValue)
+                    if (validateRange)
                     {
-                        validResponse = true;
+                        if (integerChoice >= minimumValue && integerChoice <= maximumValue)
+                        {
+                            validResponse = true;
+                        }
+                        else
+                        {
+                            ClearInputBox();
+                            DisplayInputErrorMessage($"You must enter an integer value between {minimumValue} and {maximumValue}. Please try again.");
+                            DisplayInputBoxPrompt(prompt);
+                        }
                     }
                     else
                     {
-                        ClearInputBox();
-                        DisplayInputErrorMessage($"You must enter an integer value between {minimumValue} and {maximumValue}. Please try again.");
-                        DisplayInputBoxPrompt(prompt);
+                        validResponse = true;
                     }
                 }
                 else
@@ -161,6 +173,8 @@ namespace TB_QuestGame
                     DisplayInputBoxPrompt(prompt);
                 }
             }
+
+            Console.CursorVisible = false;
 
             return true;
         }
@@ -175,7 +189,7 @@ namespace TB_QuestGame
 
             if (!Enum.TryParse<Character.GenderType>(Console.ReadLine().ToUpper(), out genderType))
             {
-                DisplayInputErrorMessage($"Input not recognized. Your gender as been set to: '{Character.GenderType.OTHER}'. " +
+                DisplayInputErrorMessage($"Invalid input. Your gender as been set to: '{Character.GenderType.OTHER}'. " +
                 "You may change this at any time. Press any key to continue.");
                 GetContinueKey();
             }      
@@ -454,6 +468,23 @@ namespace TB_QuestGame
 
             switch (choosenAction)
             {
+                //
+                // DEAFULT PAGE ********************EDIT PLAYER ACTION***************************
+                //
+                case PlayerAction.ReturnToMainMenu:
+                    //-----NAME-----//
+                    information = location.CommonName;
+                    Console.SetCursorPosition(ConsoleLayout.MessageBoxPositionLeft + 20, ConsoleLayout.MenuBoxPositionTop + 3);
+                    Console.ForegroundColor = ConsoleColor.DarkCyan;
+                    Console.Write(information);
+
+                    //-----COORDIANTES-----//
+                    information = location.Coordinates;
+                    Console.SetCursorPosition(ConsoleLayout.MessageBoxPositionLeft + 15, ConsoleLayout.MenuBoxPositionTop + 4);
+                    Console.ForegroundColor = ConsoleColor.DarkGreen;
+                    Console.Write(information);
+                    break;
+
                 case PlayerAction.None:
                     #region ***COLORS FOR MISC/OTHER SCREENS
 
@@ -526,8 +557,19 @@ namespace TB_QuestGame
                     information = location.Coordinates;
                     Console.SetCursorPosition(ConsoleLayout.MessageBoxPositionLeft + 15, ConsoleLayout.MenuBoxPositionTop + 4);
                     Console.ForegroundColor = ConsoleColor.DarkGreen;
-                    Console.Write(information);                                   
+                    Console.Write(information);
 
+                    //-----GAME OBJECTS-----//
+                    information = "Game Objects";
+                    Console.SetCursorPosition(ConsoleLayout.MessageBoxPositionLeft + 2, ConsoleLayout.MenuBoxPositionTop + 10);
+                    Console.ForegroundColor = ConsoleColor.DarkYellow;
+                    Console.Write(information);
+
+                    #endregion
+                    break;
+
+                case PlayerAction.LookAt:
+                    #region ***COLORS FOR LOOK AT SCREEN
                     #endregion
                     break;
 
@@ -615,30 +657,6 @@ namespace TB_QuestGame
                         Console.ForegroundColor = ConsoleColor.DarkRed;
                         Console.Write(information);
                     }
-
-                    //----COIN----//
-                    information = _gamePirate.Coin.ToString();
-                    Console.SetCursorPosition(ConsoleLayout.MessageBoxPositionLeft + 13, ConsoleLayout.MenuBoxPositionTop + 12);
-                    Console.ForegroundColor = ConsoleColor.DarkYellow;
-                    Console.Write(information);
-
-                    //----WEAPON----//
-                    information = Text.UppercaseFirst(_gamePirate.Weapon.ToString());
-                    Console.SetCursorPosition(ConsoleLayout.MessageBoxPositionLeft + 15, ConsoleLayout.MenuBoxPositionTop + 13);
-                    Console.ForegroundColor = ConsoleColor.DarkRed;
-                    Console.Write(information);
-
-                    //----SHIPNAME----//
-                    information = _gamePirate.ShipName;
-                    Console.SetCursorPosition(ConsoleLayout.MessageBoxPositionLeft + 18, ConsoleLayout.MenuBoxPositionTop + 14);
-                    Console.ForegroundColor = ConsoleColor.DarkCyan;
-                    Console.Write(information);
-
-                    //----SHIPTYPE----//
-                    information = _gamePirate.Ship.ToString();
-                    Console.SetCursorPosition(ConsoleLayout.MessageBoxPositionLeft + 13, ConsoleLayout.MenuBoxPositionTop + 15);
-                    Console.ForegroundColor = ConsoleColor.DarkCyan;
-                    Console.Write(information);
 
                     #endregion
                     break;
@@ -729,6 +747,39 @@ namespace TB_QuestGame
                     #endregion
                     break;
 
+                case PlayerAction.ListGameObjects:
+                    #region ***COLORS FOR LIST GAME OBJECTS SCREEN
+
+                    //----ID----// 
+                    position = 7;
+                    foreach (GameObject gameObject in _gameUniverse.GameObjects)
+                    {
+                        Console.SetCursorPosition(ConsoleLayout.MessageBoxPositionLeft + 2, ConsoleLayout.MenuBoxPositionTop + position++);
+                        Console.ForegroundColor = ConsoleColor.DarkYellow;
+                        Console.Write(gameObject.Id);
+                    }
+
+                    //----NAME----//      
+                    position = 7;
+                    foreach (GameObject gameObject in _gameUniverse.GameObjects)
+                    {
+                        Console.SetCursorPosition(ConsoleLayout.MessageBoxPositionLeft + 12, ConsoleLayout.MenuBoxPositionTop + position++);
+                        Console.ForegroundColor = ConsoleColor.DarkCyan;
+                        Console.Write(gameObject.Name);
+                    }
+
+                    //----ISLAND LOCATION----//      
+                    position = 7;
+                    foreach (GameObject gameObject in _gameUniverse.GameObjects)
+                    {
+                        Console.SetCursorPosition(ConsoleLayout.MessageBoxPositionLeft + 42, ConsoleLayout.MenuBoxPositionTop + position++);
+                        Console.ForegroundColor = ConsoleColor.DarkMagenta;
+                        Console.Write(gameObject.IslandLocationId);
+                    }
+
+                    #endregion
+                    break;
+
                 case PlayerAction.Exit:
                     break;
 
@@ -738,6 +789,7 @@ namespace TB_QuestGame
         }
 
         #region ----- get initial player info -----
+
         /// <summary>
         /// get the player's initial information at the beginning of the game
         /// </summary>
@@ -959,6 +1011,7 @@ namespace TB_QuestGame
 
             return pirateName;
         }
+
         #endregion
 
         #region ----- display responses to menu action choices -----
@@ -1070,7 +1123,69 @@ namespace TB_QuestGame
         /// </summary>
         public void DisplayListOfIslandLocations()
         {
-            DisplayGamePlayScreen("List - Island Locations", Text.ListIslandLocations(_gameUniverse.IslandLocations), ActionMenu.MainMenu, "");
+            DisplayGamePlayScreen("List - Island Locations", Text.ListIslandLocations(_gameUniverse.IslandLocations), ActionMenu.AdminMenu, "");
+        }
+
+        /// <summary>
+        /// displays a list of all game objects
+        /// </summary>
+        public void DisplayListOfAllGameObjects()
+        {
+            DisplayGamePlayScreen("List: Game Objects", Text.ListAllGameObjects(_gameUniverse.GameObjects), ActionMenu.AdminMenu, "");
+        }
+
+        /// <summary>
+        /// gets the specific game object the player wants to look at
+        /// </summary>
+        public int DisplayGetGameObjectsToLookAt()
+        {
+            int gameObjectId = 0;
+            bool validGameObjectId = false;
+
+            //
+            // get a list of game objects in the current island location
+            //
+            List<GameObject> gameObjectsInIslandLocation = _gameUniverse.GetGameObjectsByIslandLocaitonId(_gamePirate.IslandLocationId);
+
+            if (gameObjectsInIslandLocation.Count > 0)
+            {
+                DisplayGamePlayScreen("Look at a Object", Text.GameObjectsChooseList(gameObjectsInIslandLocation), ActionMenu.MainMenu, "");
+
+                while (!validGameObjectId)
+                {
+                    //
+                    // get an integer from the player
+                    //
+                    GetInteger($"Enter the Id number of the object you wish to look at: ", 0, 0, out gameObjectId);
+
+                    //
+                    // validate integer as a valid game object id and in the current location
+                    //
+                    if (_gameUniverse.IsValidGameObjectByLocaitonId(gameObjectId, _gamePirate.IslandLocationId))
+                    {
+                        validGameObjectId = true;
+                    }
+                    else
+                    {
+                        ClearInputBox();
+                        DisplayInputErrorMessage("You have entered an invalid game object id. Please try again.");
+                    }
+                }
+            }
+            else
+            {
+                DisplayGamePlayScreen("Look at a Object", "It appears there are no game objects here.", ActionMenu.MainMenu, "");
+            }
+
+            return gameObjectId;
+        }
+
+        /// <summary>
+        /// displays information for a specific game object
+        /// </summary>
+        public void DisplayGameObjectInfo(GameObject gameObject)
+        {
+            DisplayGamePlayScreen("Current Location", Text.LookAt(gameObject), ActionMenu.MainMenu, "");
         }
 
         /// <summary>
@@ -1078,8 +1193,21 @@ namespace TB_QuestGame
         /// </summary>
         public void DisplayLookAround()
         {
+            //
+            // get current island location
+            //
             IslandLocation currentIslandLocation = _gameUniverse.GetIslandLocationById(_gamePirate.IslandLocationId);
-            DisplayGamePlayScreen("Current Location - Look Around", Text.LookAround(currentIslandLocation),ActionMenu.MainMenu, "");
+
+            //
+            // get list of game objects in current island location
+            //
+            List<GameObject> gameObjectsInCurrentIslandLocation = _gameUniverse.GetGameObjectsByIslandLocaitonId(_gamePirate.IslandLocationId);
+
+            string messageBoxText = Text.LookAround(currentIslandLocation) + Environment.NewLine + Environment.NewLine;
+            messageBoxText += Text.GameObjectsChooseList(gameObjectsInCurrentIslandLocation);
+
+
+            DisplayGamePlayScreen("Current Location - Look Around", messageBoxText,ActionMenu.MainMenu, "");
         }
 
         /// <summary>
@@ -1091,7 +1219,7 @@ namespace TB_QuestGame
             bool validIslandLocationId = false;
 
             DisplayGamePlayScreen("Travel to a new Island", Text.Travel(_gamePirate, _gameUniverse.IslandLocations), ActionMenu.MainMenu, "");
-            DisplayColoredText("", PlayerAction.Travel, _gameUniverse.IslandLocations[0]);
+            DisplayColoredText("", PlayerAction.Travel, _gameUniverse.IslandLocations[1]);
 
             while (!validIslandLocationId)
             {
@@ -1188,6 +1316,146 @@ namespace TB_QuestGame
             }
 
             DisplayGamePlayScreen("Islands Visited", Text.VisitedLocations(visitedIslandLocations), ActionMenu.MainMenu, "");
+        }
+
+        /// <summary>
+        /// displays the player's current treasure inventory
+        /// </summary>
+        public void DisplayTreasureInventory()
+        {
+            DisplayGamePlayScreen("Your Treasure", Text.CurrentTreasureInventory(_gamePirate.TreasureInventory), ActionMenu.MainMenu, "");
+        }
+
+        /// <summary>
+        /// displays the player's current inventory
+        /// </summary>
+        public void DisplayInventory()
+        {
+            DisplayGamePlayScreen("Current Inventory", Text.CurrentInventory(_gamePirate.Inventory), ActionMenu.MainMenu, "");
+        }
+
+        /// <summary>
+        /// allows player to choose an item to add to their invetory, and validates for correct choices
+        /// </summary>
+        public int DisplayGetGameObjectToPickUp()
+        {
+            int gameObjectId = 0;
+            bool validGameObjectId = false;
+
+            //
+            // get a list of game objects located in the current location
+            //
+            List<GameObject> gameObjectsInIslandLocation = _gameUniverse.GetGameObjectsByIslandLocaitonId(_gamePirate.IslandLocationId);
+
+            if (gameObjectsInIslandLocation.Count > 0)
+            {
+                DisplayGamePlayScreen("Pick Up Object", Text.GameObjectsChooseList(gameObjectsInIslandLocation), ActionMenu.MainMenu, "");
+
+                while (!validGameObjectId)
+                {
+                    //
+                    // get integer from player
+                    //
+                    GetInteger($"Enter the ID number of the object you wish to add to your inventory: ", 0, 0, out gameObjectId);
+
+                    //
+                    // validate chosen integer, make sure its a valid game object id
+                    //
+                    if (_gameUniverse.IsValidGameObjectByLocaitonId(gameObjectId, _gamePirate.IslandLocationId))
+                    {
+                        GameObject gameObject = _gameUniverse.GetObjectById(gameObjectId);
+                        if (gameObject.CanInventory)
+                        {
+                            validGameObjectId = true;
+                        }
+                        else
+                        {
+                            ClearInputBox();
+                            DisplayInputErrorMessage("This object may not be added to your inventory. Please try again.");
+                        }
+                    }
+                    else
+                    {
+                        ClearInputBox();
+                        DisplayInputErrorMessage("It appears you have entered an invalid game object ID. Please try again.");
+                    }
+                }
+            }
+            else
+            {
+                DisplayGamePlayScreen("Pick Up Object", "It appears that there are no objects in this location.", ActionMenu.MainMenu, "");
+            }
+
+            return gameObjectId;
+        }
+
+        /// <summary>
+        /// allows player to choose an item to remove from their invetory, and validates for correct choices
+        /// </summary>
+        public int DisplayGetGameObjectToPutDown()
+        {
+            int gameObjectId = 0;
+            bool validInventoryObjectId = false;
+
+            if (_gamePirate.Inventory.Count > 0)
+            {
+                DisplayGamePlayScreen("Put Down Object", Text.GameObjectsChooseList(_gamePirate.Inventory), ActionMenu.MainMenu, "");
+
+                while (!validInventoryObjectId)
+                {
+                    //
+                    // get integer from player
+                    //
+                    GetInteger($"Enter the ID number of the object you wish to remove from your inventory: ", 0, 0, out gameObjectId);
+
+                    //
+                    // find game object in player's inventory
+                    //
+                    GameObject objectToPutDown = null; 
+                    foreach (GameObject gameObject in _gamePirate.Inventory)
+                    {
+                        if (gameObject.Id == gameObjectId)
+                        {
+                            objectToPutDown = gameObject;
+                        }
+                    }
+
+                    //
+                    // validate chosen game object
+                    //
+                    if (objectToPutDown != null)
+                    {
+                        validInventoryObjectId = true;
+                    }
+                    else
+                    {
+                        ClearInputBox();
+                        DisplayInputErrorMessage("It appears you have entered an ID not in your current inventory. Please try again.");
+                    }
+                }
+            }
+            else
+            {
+                DisplayGamePlayScreen("Put Down Object", "It appears that there are no objects in your inventory.", ActionMenu.MainMenu, "");
+            }
+
+            return gameObjectId;
+        }
+
+        /// <summary>
+        /// displays a confirmation that items have been added to player's inventory
+        /// </summary>
+        public void DisplayConfirmGameObjectAddedToInvetory(GameObject gameObjectAddedToInventory)
+        {
+            DisplayGamePlayScreen("Pick Up Object", $"The {gameObjectAddedToInventory.Name} has been added to your inventory.", ActionMenu.MainMenu, "");
+        }
+
+        /// <summary>
+        /// displays a confirmation that items have been removed from the player's inventory
+        /// </summary>
+        public void DisplayConfirmGameObjectRemovedFromInvetory(GameObject gameObjectRemovedFromInventory)
+        {
+            DisplayGamePlayScreen("Put Down Object", $"The {gameObjectRemovedFromInventory.Name} has been removed from your inventory.", ActionMenu.MainMenu, "");
         }
 
         #endregion

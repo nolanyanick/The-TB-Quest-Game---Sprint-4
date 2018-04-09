@@ -203,15 +203,7 @@ namespace TB_QuestGame
                 $"\tPirate Gender: \n" +
                 $"\tPirate Personality: \n" +
                 $"\tPirate's Greeting: {gamePirate.Greeting()}\n" +
-                " \n" +               
-                " \n" +
-                $"\tInventory:\n" +
-                " \n" +
-                $"\tCoin: \n" +
-                $"\tWeapon: \n" +
-                $"\tShip Name: \n" + 
-                $"\tShip: \n" +
-                " \n";
+                " \n";               
 
             return messageBoxText;
         }
@@ -263,6 +255,83 @@ namespace TB_QuestGame
         }
 
         /// <summary>
+        /// displays all game objects
+        /// </summary>
+        public static string ListAllGameObjects(IEnumerable<GameObject> gameObjects)
+        {
+            //
+            // display table name and column headers
+            //             
+            string messageBoxText =
+                "Game Objects\n" +
+                " \n" +
+
+                //
+                // display table header
+                //
+                "ID".PadRight(10) +
+                "Name".PadRight(30) +
+                "Island Location Id".PadRight(10) + " \n" +
+                "---".PadRight(10) +
+                "------------------".PadRight(30) +
+                "------------------".PadRight(10) + " \n";
+
+            //
+            // display all game objects in rows
+            //
+            string gameObjectRows = null;
+            foreach (GameObject gameObject in gameObjects)
+            {
+                gameObjectRows +=
+                    $"{gameObject.Id}".PadRight(10) +
+                    $"{gameObject.Name}".PadRight(30) +
+                    $"{gameObject.IslandLocationId}".PadRight(10) +
+                    Environment.NewLine;
+            }
+
+            messageBoxText += gameObjectRows;
+
+            return messageBoxText;
+        }
+
+        /// <summary>
+        /// displays all game objects in current location
+        /// </summary>
+        public static string GameObjectsChooseList(IEnumerable<GameObject> gameObjects)
+        {
+            //
+            // display table name and column headers
+            //             
+            string messageBoxText =
+                "Game Objects\n" +
+                " \n" +
+
+                //
+                // display table header
+                //
+                "ID".PadRight(10) +
+                "Name".PadRight(30) + " \n" +          
+                "---".PadRight(10) +               
+                "------------------".PadRight(30) + " \n";
+
+            //
+            // display all game objects in rows
+            //
+            string gameObjectRows = null;
+            foreach (GameObject gameObject in gameObjects)
+            {
+                gameObjectRows +=
+                    $"{gameObject.Id}".PadRight(10) +
+                    $"{gameObject.Name}".PadRight(30) +                    
+                    Environment.NewLine;
+            }
+
+            messageBoxText += gameObjectRows;
+
+            return messageBoxText;
+        }
+
+        /// <summary>
         /// allows user to "look around" their current location, and
         /// displays location's general contents
         /// </summary>      
@@ -271,12 +340,117 @@ namespace TB_QuestGame
             string messageBox = 
                 $"Current Location: \n" +
                 "Coordinates: \n" +
-                " \n" +
-                " \n" +             
+                " \n" +                           
                 
                 islandLocation.GeneralContents;
 
             return messageBox;
+        }
+
+        /// <summary>
+        /// displays specific game object information
+        /// </summary>
+        public static string LookAt(GameObject gameObject)
+        {
+            string meassageTextBox = "";
+
+            meassageTextBox =
+                $"{gameObject.Name}\n" +
+                " \n" +
+                gameObject.Description + " \n" +
+                " \n" +
+
+                $"The {gameObject.Name} has a value of {gameObject.Value} and ";
+
+            if (gameObject.CanInventory)
+            {
+                meassageTextBox += "can be added to your inventory.";
+            }
+            else
+            {
+                meassageTextBox += "cannot be added to your inventory.";
+
+            }
+
+            return meassageTextBox;
+        }
+
+        /// <summary>
+        /// displays the current inventory
+        /// </summary>
+        public static string CurrentTreasureInventory(IEnumerable<Treasure> treasureInventory)
+        {
+            string messageBoxText = "";
+
+            //
+            // display table header
+            //             
+            messageBoxText =
+                "ID".PadRight(10) +
+                "Name".PadRight(30) +
+                "Value".PadRight(10) +
+                " \n" + 
+                "---".PadRight(10) +
+                "-------------------------".PadRight(30) +
+                "-------------------".PadRight(30) + 
+                " \n";
+
+            //
+            // display all game objects in rows
+            //
+            string inventoryObjectRows = null;
+            foreach (Treasure treasureObject  in treasureInventory)
+            {
+                inventoryObjectRows +=
+                    $"{treasureObject.Id}".PadRight(10) +
+                    $"{treasureObject.Name}".PadRight(30) +
+                    $"{treasureObject.Value}".PadRight(30) +
+
+                    Environment.NewLine;
+            }
+
+            messageBoxText += inventoryObjectRows;
+
+            return messageBoxText;
+        }
+
+        /// <summary>
+        /// displays the current inventory
+        /// </summary>
+        public static string CurrentInventory(IEnumerable<GameObject> inventory)
+        {
+            string messageBoxText = "";
+
+            //
+            // display table header
+            //             
+            messageBoxText =
+                "ID".PadRight(10) +
+                "Name".PadRight(30) +
+                "Type".PadRight(10) +
+                " \n" +
+                "---".PadRight(10) +
+                "-------------------------".PadRight(30) +
+                "-------------------".PadRight(30) +
+                " \n";
+
+            //
+            // display all game objects in rows
+            //
+            string inventoryObjectRows = null;
+            foreach (GameObject inventoryObject in inventory)
+            {
+                inventoryObjectRows +=
+                    $"{inventoryObject.Id}".PadRight(10) +
+                    $"{inventoryObject.Name}".PadRight(30) +
+                    $"{inventoryObject.Type}".PadRight(30) +
+
+                    Environment.NewLine;
+            }
+
+            messageBoxText += inventoryObjectRows;
+
+            return messageBoxText;
         }
 
         /// <summary>
@@ -297,23 +471,23 @@ namespace TB_QuestGame
                 "ID".PadRight(10) + "Name".PadRight(30) + "Accessible".PadRight(10) + "\n" +
                 "---".PadRight(10) + "----------------------".PadRight(30) + "-------".PadRight(10) + "\n";
 
-            //
-            // display all locations except for current location
-            //
-            string islandLocationList = null;
-            foreach (IslandLocation islandLocation in islandLocations)
-            {
-                if (islandLocation.IslandLocationID != gamePirate.IslandLocationId)
-                {
-                    islandLocationList +=                     
-                    $"{islandLocation.IslandLocationID}".PadRight(10) +
-                    $"{islandLocation.CommonName}".PadRight(30) +
-                    $"{islandLocation.Accessible}".PadRight(10) +
-                    Environment.NewLine;
-                }
-            }
+            ////
+            //// display all locations except for current location
+            ////
+            //string islandLocationList = null;
+            //foreach (IslandLocation islandLocation in islandLocations)
+            //{
+            //    if (islandLocation.IslandLocationID != gamePirate.IslandLocationId)
+            //    {
+            //        islandLocationList +=                     
+            //        $"{islandLocation.IslandLocationID}".PadRight(10) +
+            //        $"{islandLocation.CommonName}".PadRight(30) +
+            //        $"{islandLocation.Accessible}".PadRight(10) +
+            //        Environment.NewLine;
+            //    }
+            //}
 
-            messageBox += islandLocationList;
+            //messageBox += islandLocationList;
 
             return messageBox;
         }
