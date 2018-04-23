@@ -13,7 +13,6 @@ namespace TB_QuestGame
         public enum RarityLevel
         {
             Common,
-            Uncommon,
             Unique,
             Rare,
             Legendary
@@ -23,18 +22,24 @@ namespace TB_QuestGame
 
         #region FIELDS
 
-        private int _quantity;
+        
         private RarityLevel _rarityLevel;
+
+        public override int Id { get; set; }
+        public override string Name { get; set; }
+        public override string Description { get; set; }
+        public override int IslandLocationId { get; set; }
+        public override bool CanInventory { get; set; }
+        public override bool IsConsumable { get; set; }
+        public override bool IsVisible { get; set; }
+        public override int Value { get; set; }
+        public override bool HasBeenPickedUp { get; set; }
+        public override ObjectType Type { get; set; }
+        public override bool Consumed { get; set; }
 
         #endregion
 
         #region PROPERTIES
-
-        public int Quantity
-        {
-            get { return _quantity; }
-            set { _quantity = value; }
-        }
 
         public RarityLevel Rarity
         {

@@ -16,6 +16,9 @@ namespace TB_QuestGame
             MissionIntro,
             InitializeMission,
             MainMenu,
+            ObjectMenu,
+            NpcMenu,
+            PlayerMenu,
             AdminMenu,
             InitializePlayerName,
             InitializeRandomName
@@ -28,9 +31,9 @@ namespace TB_QuestGame
             MenuName = "MissionIntro",
             MenuTitle = "",
             MenuChoices = new Dictionary<char, PlayerAction>()
-                    {
-                        { ' ', PlayerAction.None }
-                    }
+                {
+                    { ' ', PlayerAction.None }
+                }
         };
 
         public static Menu InitializeMission = new Menu()
@@ -48,9 +51,9 @@ namespace TB_QuestGame
             MenuName = "SetupMenu",
             MenuTitle = "Setup Menu",
             MenuChoices = new Dictionary<char, PlayerAction>()
-            {
-                {'1', PlayerAction.RandomName }
-            }            
+                {
+                    {'1', PlayerAction.RandomName }
+                }            
         };
 
         public static Menu InitializeRandomName = new Menu()
@@ -58,9 +61,9 @@ namespace TB_QuestGame
             MenuName = "SetupMenu",
             MenuTitle = "Setup Menu",
             MenuChoices = new Dictionary<char, PlayerAction>()
-            {
-                {'1', PlayerAction.Return }
-            }
+                {
+                    {'1', PlayerAction.Return }
+                }
         };
 
         public static Menu MainMenu = new Menu()
@@ -69,17 +72,12 @@ namespace TB_QuestGame
             MenuTitle = "Main Menu",
             MenuChoices = new Dictionary<char, PlayerAction>()
                 {
-                    { '1', PlayerAction.PlayerInfo },
-                    { '2', PlayerAction.LookAround },
-                    { '3', PlayerAction.LookAt },
-                    { '4', PlayerAction.PickUp },
-                    { '5', PlayerAction.PutDown },
-                    { '6', PlayerAction.Inventory },
-                    { '7', PlayerAction.TreasureInventory },
-                    { '8', PlayerAction.Travel },
-                    { '9', PlayerAction.PirateLocationsVisited },
-                    { 'e', PlayerAction.EditPlayerInfo },
-                    { 'a', PlayerAction.AdminMenu },
+                    { '1', PlayerAction.LookAround },
+                    { '2', PlayerAction.Travel },
+                    { '3', PlayerAction.ObjectMenu },
+                    { '4', PlayerAction.NpcMenu },
+                    { '5', PlayerAction.PlayerMenu},                                      
+                    { '6', PlayerAction.AdminMenu },
                     { '0', PlayerAction.Exit }
                 }
         };
@@ -89,12 +87,54 @@ namespace TB_QuestGame
             MenuName = "AdminMenu",
             MenuTitle = "Admin Menu",
             MenuChoices = new Dictionary<char, PlayerAction>()
+                {
+                    {'1', PlayerAction.ListDestinations },
+                    {'2', PlayerAction.ListGameObjects },
+                    {'3', PlayerAction.ListNpcs },
+                    {'0', PlayerAction.ReturnToMainMenu }
+                }
+        };
+
+        public static Menu PlayerMenu = new Menu()
+        {
+            MenuName = "PlayerMenu",
+            MenuTitle = "Player Menu",
+            MenuChoices = new Dictionary<char, PlayerAction>()
             {
-                {'1', PlayerAction.ListDestinations },
-                {'2', PlayerAction.ListGameObjects },
-                {'0', PlayerAction.ReturnToMainMenu }
+                    {'1', PlayerAction.PlayerInfo },
+                    {'2', PlayerAction.EditPlayerInfo },
+                    {'3', PlayerAction.Inventory },
+                    {'4', PlayerAction.TreasureInventory },
+                    {'0', PlayerAction.ReturnToMainMenu }
             }
         };
+
+        public static Menu ObjectMenu = new Menu()
+        {
+            MenuName = "ObjectMenu",
+            MenuTitle = "Object Menu",
+            MenuChoices = new Dictionary<char, PlayerAction>()
+            {
+                    {'1', PlayerAction.LookAt },
+                    {'2', PlayerAction.PickUp },
+                    {'3', PlayerAction.PutDown },                    
+                    {'0', PlayerAction.ReturnToMainMenu }
+            }
+        };
+
+        public static Menu NpcMenu = new Menu()
+        {
+            MenuName = "NpcMenu",
+            MenuTitle = "Npc Menu",
+            MenuChoices = new Dictionary<char, PlayerAction>()
+            {
+                    {'1', PlayerAction.TalkTo },
+                    {'0', PlayerAction.ReturnToMainMenu }
+            }
+        };
+
+
+
 
         //public static Menu ManageTraveler = new Menu()
         //{

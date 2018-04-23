@@ -14,90 +14,8 @@ namespace TB_QuestGame
         /// <summary>
         /// list of all game objects
         /// </summary>
-        public static List<GameObject> gameObjects = new List<GameObject>()
-        {
-            #region ***SHIPS***
-
-            //new Ship
-            //{
-            //    Id = 20,
-            //    Name = "British Man-O-War",
-            //    IslandLocationId = 4,
-            //    Description = "Devastating warship, feared by many.",
-            //    Type = Ship.ShipType.BritishManOWar,
-            //    Value = 15000,
-            //    CanInventory = false,
-            //    IsConsumable = false,
-            //    IsVisible = true
-            //},
-
-            new Ship
-            {
-                Id = 21,
-                Name = "Frigate",
-                IslandLocationId = 1,
-                Description = "Standard ship.",
-                Type = Ship.ShipType.Frigate,
-                Value = 8000,
-                CanInventory = false,
-                IsConsumable = false,
-                IsVisible = true
-            },
-
-            //new Ship
-            //{
-            //    Id = 22,
-            //    Name = "Galleon",
-            //    IslandLocationId = 1,
-            //    Description = "Standard ship.",
-            //    Type = Ship.ShipType.Galleon,
-            //    Value = 8000,
-            //    CanInventory = false,
-            //    IsConsumable = false,
-            //    IsVisible = true
-            //},
-
-            //new Ship
-            //{
-            //    Id = 23,
-            //    Name = "Merchant Ship",
-            //    IslandLocationId = 3,
-            //    Description = "Merchant ship.",
-            //    Type = Ship.ShipType.Merchant,
-            //    Value = 5000,
-            //    CanInventory = false,
-            //    IsConsumable = false,
-            //    IsVisible = true
-            //},
-
-            new Ship
-            {
-                Id = 24,
-                Name = "Sloop",
-                IslandLocationId = 2,
-                Description = "Standard ship.",
-                Type = Ship.ShipType.Sloop,
-                Value = 1000,
-                CanInventory = false,
-                IsConsumable = false,
-                IsVisible = true
-            },
-
-            //new Ship
-            //{
-            //    Id = 25,
-            //    Name = "Spanish Galleon",
-            //    IslandLocationId = 4,
-            //    Description = "Luxorious warship, lots of cargo space.",
-            //    Type = Ship.ShipType.SpanishGalleon,
-            //    Value = 12000,
-            //    CanInventory = false,
-            //    IsConsumable = false,
-            //    IsVisible = true
-            //},
-
-            #endregion
-
+        public static List<GameObject> GameObjects = new List<GameObject>()
+        {         
             #region ***TREASURES***
 
             new Treasure()
@@ -106,8 +24,7 @@ namespace TB_QuestGame
                 Name = "Gold Coin",
                 Type = GameObject.ObjectType.Treasure,
                 IslandLocationId = 0,
-                Description = "Gold coin, used as common currency.",
-                Quantity = 100,
+                Description = "Gold coin, used as common currency.",             
                 Value = 100,
                 Rarity = Treasure.RarityLevel.Common,
                 CanInventory = true,
@@ -121,8 +38,7 @@ namespace TB_QuestGame
                 Name = "Ruby",
                 Type = GameObject.ObjectType.Treasure,
                 IslandLocationId = 2,
-                Description = "Flawless ruby.",
-                Quantity = 1,
+                Description = "Flawless ruby.",               
                 Value = 400,
                 Rarity = Treasure.RarityLevel.Rare,
                 CanInventory = true,
@@ -136,10 +52,9 @@ namespace TB_QuestGame
                 Name = "Sapphire",
                 Type = GameObject.ObjectType.Treasure,
                 IslandLocationId = 3,
-                Description = "Flawless sapphire.",
-                Quantity = 1,
+                Description = "Flawless sapphire.",          
                 Value = 300,
-                Rarity = Treasure.RarityLevel.Unique,
+                Rarity = Treasure.RarityLevel.Rare,
                 CanInventory = true,
                 IsConsumable = false,
                 IsVisible = true
@@ -151,10 +66,9 @@ namespace TB_QuestGame
                 Name = "Emerald",
                 Type = GameObject.ObjectType.Treasure,
                 IslandLocationId = 1,
-                Description = "Flawless emerald shines bright green in the light.",
-                Quantity = 1,
+                Description = "Flawless emerald shines bright green in the light.",              
                 Value = 200,
-                Rarity = Treasure.RarityLevel.Unique,
+                Rarity = Treasure.RarityLevel.Rare,
                 CanInventory = true,
                 IsConsumable = false,
                 IsVisible = true
@@ -166,10 +80,9 @@ namespace TB_QuestGame
                 Name = "Diamond",
                 Type = GameObject.ObjectType.Treasure,
                 IslandLocationId = 4,
-                Description = "Flawless diamond.",
-                Quantity = 1,
+                Description = "Flawless diamond.",            
                 Value = 500,
-                Rarity = Treasure.RarityLevel.Rare,
+                Rarity = Treasure.RarityLevel.Legendary,
                 CanInventory = true,
                 IsConsumable = false,
                 IsVisible = true
@@ -181,8 +94,7 @@ namespace TB_QuestGame
                 Name = "Royal Necklace",
                 Type = GameObject.ObjectType.Treasure,
                 IslandLocationId = 2,
-                Description = "Ornate necklace won by royalty.",
-                Quantity = 1,
+                Description = "Ornate necklace won by royalty.",         
                 Value = 75,
                 Rarity = Treasure.RarityLevel.Unique,
                 CanInventory = true,
@@ -196,8 +108,7 @@ namespace TB_QuestGame
                 Name = "Jewel Studded Rings",
                 Type = GameObject.ObjectType.Treasure,
                 IslandLocationId = 3,
-                Description = "Gold rings decorated with numerous gems.",
-                Quantity = 1,
+                Description = "Gold rings decorated with numerous gems.",       
                 Value = 100,
                 Rarity = Treasure.RarityLevel.Unique,
                 CanInventory = true,
@@ -212,6 +123,8 @@ namespace TB_QuestGame
             new Food
             {
                 Id = 1,
+                HealthPoints = 25,
+                IsSpoiled = false,
                 Name = "Fish",
                 Type = GameObject.ObjectType.Food,
                 IslandLocationId = 1,
@@ -225,6 +138,8 @@ namespace TB_QuestGame
             new Food
             {
                 Id = 2,
+                HealthPoints = 10,
+                IsSpoiled = false,
                 Name = "Crackers",
                 Type = GameObject.ObjectType.Food,
                 IslandLocationId = 2,
@@ -238,6 +153,8 @@ namespace TB_QuestGame
             new Food
             {
                 Id = 3,
+                HealthPoints = -10,
+                IsSpoiled = false,
                 Name = "Moldy Bread",
                 Type = GameObject.ObjectType.Food,
                 IslandLocationId = 7,
@@ -251,6 +168,8 @@ namespace TB_QuestGame
             new Food
             {
                 Id = 4,
+                HealthPoints = 35,
+                IsSpoiled = false,
                 Name = "Rum",
                 Type = GameObject.ObjectType.Food,
                 IslandLocationId = 1,
@@ -277,6 +196,8 @@ namespace TB_QuestGame
             new Food
             {
                 Id = 6,
+                HealthPoints = 35,
+                IsSpoiled = false,
                 Name = "Red Wine",
                 Type = GameObject.ObjectType.Food,
                 IslandLocationId = 3,
@@ -303,40 +224,57 @@ namespace TB_QuestGame
             #endregion
 
             #region ***WEAPONS***
-            
+
             new Weapon
             {
                 Id = 30,
-                Name = "Cutlass",
+                Damage = 10,
+                Name = "Dagger",
                 Type = GameObject.ObjectType.Weapon,
                 IslandLocationId = 1,
-                Description = "Standard sword prefered by many who sail the seas.",
+                Description = "A rusty old dagger.",
                 Value = 100,
                 CanInventory = true,
                 IsConsumable = false,
                 IsVisible = true
             },
 
-            //new Weapon
-            //{
-            //    Id = 31,
-            //    Name = "Flintlock Pistol",
-            //    Type = GameObject.ObjectType.Weapon,
-            //    IslandLocationId = 3,
-            //    Description = "A pistol that is in pretty bad shape.",
-            //    Value = 250,
-            //    CanInventory = true,
-            //    IsConsumable = false,
-            //    IsVisible = true
-            //},
+            new Weapon
+            {
+                Id = 35,
+                Damage = 20,
+                Name = "Broad Sword",
+                Type = GameObject.ObjectType.Weapon,
+                IslandLocationId = 1,
+                Description = "Standard sword prefered by many on the battlefield.",
+                Value = 100,
+                CanInventory = true,
+                IsConsumable = false,
+                IsVisible = true
+            },
+
+            new Weapon
+            {
+                Id = 31,
+                Damage = 100,
+                Name = "Warhammer",
+                Type = GameObject.ObjectType.Weapon,
+                IslandLocationId = 3,
+                Description = "A giant hammer capable of delivering devastating blows.",
+                Value = 250,
+                CanInventory = true,
+                IsConsumable = false,
+                IsVisible = true
+            },
 
             new Weapon
             {
                 Id = 32,
-                Name = "Musket",
+                Damage = 20,
+                Name = "Bow and Arrow",
                 Type = GameObject.ObjectType.Weapon,
                 IslandLocationId = 4,
-                Description = "A nice looking muskiet, capable dealing lots of damage.",
+                Description = "A bow made of oak, equipped with steel tipped arrows.",
                 Value = 500,
                 CanInventory = true,
                 IsConsumable = false,
@@ -346,10 +284,11 @@ namespace TB_QuestGame
             new Weapon
             {
                 Id = 33,
-                Name = "Hand Cannon",
+                Damage = 30,
+                Name = "Battle Axe",
                 Type = GameObject.ObjectType.Weapon,
                 IslandLocationId = 7,
-                Description = "A mysterious looking gun.",
+                Description = "A razor sharp axe designed for deadly conflicts.",
                 Value = 1000,
                 CanInventory = true,
                 IsConsumable = false,

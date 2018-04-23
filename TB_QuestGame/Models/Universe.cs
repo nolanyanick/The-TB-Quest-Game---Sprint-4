@@ -12,12 +12,10 @@ namespace TB_QuestGame
     public class Universe
     {
         #region lists to be maintianed by the Universe Class
-
-        //
-        // list of all island locations
-        //
+        
         private List<IslandLocation> _islandLocations;
         private List<GameObject> _gameObjects;
+        private List<Npc> _npcs;
 
         #endregion
 
@@ -35,6 +33,12 @@ namespace TB_QuestGame
             set { _gameObjects = value; }
         }
 
+        public List<Npc> Npcs
+        {
+            get { return _npcs; }
+            set { _npcs = value; }
+        }
+    
         #endregion
 
         #region CONSTRUCTORS
@@ -58,7 +62,8 @@ namespace TB_QuestGame
         private void InitializeUniverse()
         {
             _islandLocations = UniverseObjects.IslandLocations;
-            _gameObjects = UniverseObjects.gameObjects;
+            _gameObjects = UniverseObjects.GameObjects;
+            _npcs = UniverseObjects.Npcs;
         }
 
         /// <summary>
@@ -121,6 +126,89 @@ namespace TB_QuestGame
         }
 
         /// <summary>
+        /// determines if npc in question is valid
+        /// </summary>
+        public bool IsValidNpcByLocationId(int npcId, int currentSpacetiemLocation)
+        {
+            List<int> npcIds = new List<int>();
+
+            //
+            // create a list of npcs in the current location
+            //
+            foreach (var npc in _npcs)
+            {
+                if (npc.IslandLocationId == currentSpacetiemLocation)
+                {
+                    npcIds.Add(npc.Id);
+                }
+            }
+
+            //
+            // determine if the game object id is a valid id and return the reslult
+            //
+            if (npcIds.Contains(npcId))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// gets an NPC via their Id
+        /// </summary>
+        public Npc GetNpcById(int Id)
+        {
+            Npc npcToReturn = null;
+
+            //
+            // run through the NPC object list and grab the correct one
+            //
+            foreach (var npc in _npcs)
+            {
+                if (npc.Id == Id)
+                {
+                    npcToReturn = npc;
+                }
+            }
+
+            //
+            // the specified Id was notfound in the universe
+            // thow an exception
+            //
+            if (npcToReturn == null)
+            {
+                string feedbackMessage = $"The NPC ID {Id} does not exsist in the current universe.";
+                throw new ArgumentException(feedbackMessage, Id.ToString());
+            }
+
+            return npcToReturn;
+        }
+
+        /// <summary>
+        /// gets a list of NPCs in the current location
+        /// </summary>
+        public List<Npc> GetNpcsByIslandLocation(int isandLocationId)
+        {
+            List<Npc> npcs = new List<Npc>();
+
+            //
+            // run through the NPC object list and grab all that are in the current location
+            //
+            foreach (var npc in _npcs)
+            {
+                if (npc.IslandLocationId == isandLocationId)
+                {
+                    npcs.Add(npc);
+                }
+            }
+
+            return npcs;
+        }
+
+        /// <summary>
         /// gets an object via its id
         /// </summary>
         public GameObject GetObjectById(int id)
@@ -152,7 +240,7 @@ namespace TB_QuestGame
         }
 
         /// <summary>
-        /// gets a game object based on its island location id
+        /// gets all game objects in the current location
         /// </summary>
         public List<GameObject> GetGameObjectsByIslandLocaitonId(int islandLocationId)
         {

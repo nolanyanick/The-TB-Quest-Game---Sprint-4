@@ -19,20 +19,21 @@ namespace TB_QuestGame
         public static string QuestIntro()
         {
             string messageBoxText =
-            "Ever since you can remember you wanted to apart of the English Navy, a dream that you eventually " +
-            "fullfilled. Once you completed your training you were stationed " +
-            "on a British Man-O-War operating in the Caribbean Sea, who's sole mission was to elimante " +
-            "pirates/renegades in an effort to restore order to the Caribbean. " +
-            "During an intense battle between your ship and the infamous 'Queen Ann's Revenge', " +
-            "captained by the ruthless Blackbeard, you unfortunately suffered severe injuries. " +
-            "After losing a hand and spending months in an infirmary, you're devasted when you hear " +
-            "you are no longer physically fit to serve the English Navy. " +
-            " \n"+
+            "The year is 1252 and you are a common theif stealing anything you can find that'll put money in your pocket. " +
+            "As long as you can remeber you've had success stealing valuables for your own gain. However, after " +
+            "many years of theivery you've acquired many skills and have developed into a world class theif. \n" +
             " \n" +
-            "Ever since that fateful battle against Blackbeard and his crew, " +
-            "your life has been in rapid downward spiral. Because of that you've been consumed with getting " +
-            "your revenge. Now broke, exhausted, hungry, and more determined than ever, " +
-            "you set out to track down Blackbeard and enact your revenge no matter what it takes.\n" +
+            "One day during a normal burglary job, you're caught exiting the victim's house by a passing guard. After a long and " +
+            "exhausting chase, followed by a grueling battle, you're finally apprehended by guards. " +
+            "With all the crimes you've committed over the years, you're sentenced to spend the rest of your days in a deep and vast " +
+            "dungeon below the city." +
+            "According to legend this place is a living hell, filled with dangerous criminals, creatures, and demons. " +
+            "Along with that, you've heard rumors that any attempt to escpape from the dungeon is futile, as there " +
+            "has never been any evidence of anyone breaking out. \n" +
+            " \n" +
+            "Coming to grips with your fate you decide that instead of wasting away for years and years, you'd rather " +
+            "spend your time trying to escape and spend the rest of your life abive ground. \n" +
+            " \n" +
             " \n" +
             "Press the Esc key to exit the game at any point.\n" +
             " \n" +
@@ -49,24 +50,24 @@ namespace TB_QuestGame
         {
             string messageBoxText =
 
-            "You are currently in heart of the Caribbean, Port Royal. " +
-            "A massive port under British conrtol located on the largest island of the Caribbean. " +
-            "You decide you must first collect some coin in order to pay for a ship. " +
-            "Obtaining coin can be achieved in many ways, like stealing or bartering. " +
-            "But be careful on what method you choose, consequences could follow!\n" +
+            "You are currently in a small cell tucked away in a corner of one the larger rooms in the dungeon. " +
+            "Altought the smell is almost unbareable, you've made this small space your temporary home as plot your escape. " +
+            "The isolation provided by the cell allows to stay hidden from possible threats, and " +
+            "it allows you to work/plan in secrecy." +
+            " \n" +
             " \n" +
             "\tChoose from the menu options to proceed.\n";
 
             return messageBoxText;
         }
 
-        public static List<string> StatusBox(Player gamePirate, Universe universe) 
+        public static List<string> StatusBox(Player gamePrisoner, Universe universe) 
         {
             List<string> statusBoxText = new List<string>();
 
-            statusBoxText.Add($"Experience Points: {gamePirate.ExperiencePoints}\n");
-            statusBoxText.Add($"Health: {gamePirate.Health}\n");
-            statusBoxText.Add($"Lives: {gamePirate.Lives}\n");
+            statusBoxText.Add($"Health: {gamePrisoner.Health}\n");
+            statusBoxText.Add($"Experience Points: {gamePrisoner.ExperiencePoints}\n");
+            statusBoxText.Add($"Lives: {gamePrisoner.Lives}\n");
 
             return statusBoxText;
         }
@@ -85,32 +86,35 @@ namespace TB_QuestGame
             return messageBoxText;
         }
 
-        public static string InitializeMissionGetPirateName()
+        public static string InitializeMissionGetPrisonerName()
         {
             string messageBoxText =
                 "Enter your name.\n" +
                 " \n" +
                 "Please use the name you wish to be referred to during your quest.\n" +
                 " \n" +
-                "If you would like to generate a random pirate name for you to use, enter '1'.";
+                "If you would like to generate a random name for you to use, enter '1'.";
 
             return messageBoxText;
         }
 
-        public static string InitializeMissionGetRandomName(Player gamePirate)
+        public static string InitializeMissionGetRandomName
         {
-            string messageBoxText =
-                "Random Name:" +                             
-                " \n" +
-                " \n" +
-                "If you would like to generate a new name, enter 'Yes'.\n" +
-                "If, however, you are satisfied with this name you may continue on with the setup process by entering 'No'.\n" +
-                "Also, if you change your mind you may enter '1' to be returned to previous screen.";
+            get
+            {
+                string messageBoxText =
+                    "Random Name:" +
+                    " \n" +
+                    " \n" +
+                    "If you would like to generate a new name, enter 'Yes'.\n" +
+                    "If, however, you are satisfied with this name you may continue on with the setup process by entering 'No'.\n" +
+                    "Also, if you change your mind you may enter '1' to be returned to previous screen.";
 
-            return messageBoxText;
+                return messageBoxText;
+            }
         }
 
-        public static string InitializeMissionGetPirateAge(Player gamePirate)
+        public static string InitializeMissionGetPrisonerAge()
         {
             string messageBoxText =
                 "First we'll start off with your age.\n" +
@@ -121,33 +125,36 @@ namespace TB_QuestGame
             return messageBoxText;
         }
 
-        public static string InitializeMissionGetPirateGender(Player gamePirate)
+        public static string InitializeMissionGetPrisonerGender
         {
-            string messageBoxText =
-                "Nextwe  must record your gender.\n" +
-                " \n" +
-                "Please use the universal gender classifications listed below.\n" +
-                " \n";
-
-            string genderList = null;
-
-            foreach (Character.GenderType gender in Enum.GetValues(typeof(Character.GenderType)))
+            get
             {
-                if (gender != Character.GenderType.OTHER)
+                string messageBoxText =
+                    "Nextwe  must record your gender.\n" +
+                    " \n" +
+                    "Please use the universal gender classifications listed below.\n" +
+                    " \n";
+
+                string genderList = null;
+
+                foreach (Character.GenderType gender in Enum.GetValues(typeof(Character.GenderType)))
                 {
-                    genderList += UppercaseFirst($"{gender}\n");
+                    if (gender != Character.GenderType.OTHER)
+                    {
+                        genderList += UppercaseFirst($"{gender}\n");
+                    }
                 }
+
+                messageBoxText += genderList;
+
+                return messageBoxText;
             }
-
-            messageBoxText += genderList;
-
-            return messageBoxText;
         }
 
-        public static string InitializeMissionGetPiratePersonality(Player gamePirate)
+        public static string InitializeMissionGetPrisonerPersonality(Player gamePrisoner)
         {
             string messageBoxText =
-                $"Next we must know a little about who you are, {gamePirate.Name}.\n" +
+                $"Next we must know a little about who you are, {gamePrisoner.Name}.\n" +
                 " \n" +
                 "Do consider yourself to be friendly around others, or not.\n" +
                 "A simple 'Yes' or 'No' will suffice.\n" +
@@ -157,10 +164,10 @@ namespace TB_QuestGame
             return messageBoxText;
         }
 
-        public static string InitializeMissionEchoPirateInfo(Player gamePirate)
+        public static string InitializeMissionEchoPrisonerInfo(Player gamePrisoner)
         {
             string messageBoxText =
-                $"Very good then {gamePirate.Name}.\n" +
+                $"Very good then {gamePrisoner.Name}.\n" +
                 " \n" +
                 "It appears we have all the necessary information to begin your game! You will find it" +
                 " listed below.\n" +
@@ -182,27 +189,16 @@ namespace TB_QuestGame
         #region MAIN MENU ACTION SCREENS
 
         /// <summary>
-        /// displays all payer info on one screen
+        /// displays all player info
         /// </summary>
-        public static string PirateInfo(Player gamePirate)
-        {
-            string pirateShipName;
-
-            if (gamePirate.ShipOwner)
-            {
-                pirateShipName = gamePirate.ShipName;
-            }
-            else
-            {
-                pirateShipName = "You  must obtain a ship first in order to give it a name!";
-            }
-
+        public static string PrisonerInfo(Player gamePrisoner)
+        {            
             string messageBoxText =
-                $"\tPirate Name: \n" +
-                $"\tPirate Age: \n" +
-                $"\tPirate Gender: \n" +
-                $"\tPirate Personality: \n" +
-                $"\tPirate's Greeting: {gamePirate.Greeting()}\n" +
+                $"\tPrisoner Name: \n" +
+                $"\tPrisoner Age: \n" +
+                $"\tPrisoner Gender: \n" +
+                $"\tPrisoner Personality: \n" +
+                $"\tPrisoner's Greeting: {gamePrisoner.Greeting()}\n" +
                 " \n";               
 
             return messageBoxText;
@@ -211,14 +207,11 @@ namespace TB_QuestGame
         /// <summary>
         /// allows player to edit parts of their exsisting info
         /// </summary>
-        public static string EditPirateInfo(Player gamePirate)
+        public static string EditPrisonerInfo()
         {
             string messageBoxText =
                "Please check over you current account information, and select a corresponding \n" +
                "letter to change that part of yout account.\n" +
-               //" \n" +
-               //"You may also enter any of the available menu options to navigate to a different screen \n" +
-               //"or to return to the previous one. \n" +
                " \n" +
                " \n" +
                $"\tCurrent Information for: \n" +
@@ -239,7 +232,7 @@ namespace TB_QuestGame
         /// <summary>
         /// displays all locations
         /// </summary>        
-        public static string ListIslandLocations(IEnumerable<IslandLocation> islandLocations)
+        public static string ListAllRoomLocations()
         {
             string messageBox =
             "Island Locations\n" +
@@ -257,7 +250,7 @@ namespace TB_QuestGame
         /// <summary>
         /// displays all game objects
         /// </summary>
-        public static string ListAllGameObjects(IEnumerable<GameObject> gameObjects)
+        public static string ListAllGameObjects()
         {
             //
             // display table name and column headers
@@ -276,20 +269,53 @@ namespace TB_QuestGame
                 "------------------".PadRight(30) +
                 "------------------".PadRight(10) + " \n";
 
-            //
-            // display all game objects in rows
-            //
-            string gameObjectRows = null;
-            foreach (GameObject gameObject in gameObjects)
-            {
-                gameObjectRows +=
-                    $"{gameObject.Id}".PadRight(10) +
-                    $"{gameObject.Name}".PadRight(30) +
-                    $"{gameObject.IslandLocationId}".PadRight(10) +
-                    Environment.NewLine;
-            }
+            return messageBoxText;
+        }
 
-            messageBoxText += gameObjectRows;
+        /// <summary>
+        /// displays a list of all NPCs
+        /// </summary>
+        public static string ListAllNpcs()
+        {
+            //
+            // display table name and column headers
+            //             
+            string messageBoxText =
+                "NPCs\n" +
+                " \n" +
+
+                //
+                // display table header
+                //
+                "ID".PadRight(10) +
+                "Name".PadRight(30) +
+                "Island Location Id".PadRight(10) + " \n" +
+                "---".PadRight(10) +
+                "------------------".PadRight(30) +
+                "------------------".PadRight(10) + " \n";
+
+            return messageBoxText;
+        }
+
+        /// <summary>
+        /// displays all NPCs in current location
+        /// </summary>
+        public static string NpcsChooseList()
+        {
+            //
+            // display table name and column headers
+            //             
+            string messageBoxText =
+                "NPCs\n" +
+                " \n" +
+
+                //
+                // display table header
+                //
+                "ID".PadRight(10) +
+                "Name".PadRight(30) + " \n" +
+                "---".PadRight(10) +
+                "------------------".PadRight(30) + " \n";
 
             return messageBoxText;
         }
@@ -388,28 +414,12 @@ namespace TB_QuestGame
             messageBoxText =
                 "ID".PadRight(10) +
                 "Name".PadRight(30) +
-                "Value".PadRight(10) +
+                "Rarity".PadRight(10) +
                 " \n" + 
                 "---".PadRight(10) +
                 "-------------------------".PadRight(30) +
                 "-------------------".PadRight(30) + 
                 " \n";
-
-            //
-            // display all game objects in rows
-            //
-            string inventoryObjectRows = null;
-            foreach (Treasure treasureObject  in treasureInventory)
-            {
-                inventoryObjectRows +=
-                    $"{treasureObject.Id}".PadRight(10) +
-                    $"{treasureObject.Name}".PadRight(30) +
-                    $"{treasureObject.Value}".PadRight(30) +
-
-                    Environment.NewLine;
-            }
-
-            messageBoxText += inventoryObjectRows;
 
             return messageBoxText;
         }
@@ -456,7 +466,7 @@ namespace TB_QuestGame
         /// <summary>
         /// displays travel information
         /// </summary>
-        public static string Travel(Player gamePirate, List<IslandLocation> islandLocations)
+        public static string Travel(Player gamePirate)
         {
             string messageBox =
                 $"{gamePirate.Name}, your navigator will need to know the next destination." +
@@ -470,24 +480,6 @@ namespace TB_QuestGame
                 //
                 "ID".PadRight(10) + "Name".PadRight(30) + "Accessible".PadRight(10) + "\n" +
                 "---".PadRight(10) + "----------------------".PadRight(30) + "-------".PadRight(10) + "\n";
-
-            ////
-            //// display all locations except for current location
-            ////
-            //string islandLocationList = null;
-            //foreach (IslandLocation islandLocation in islandLocations)
-            //{
-            //    if (islandLocation.IslandLocationID != gamePirate.IslandLocationId)
-            //    {
-            //        islandLocationList +=                     
-            //        $"{islandLocation.IslandLocationID}".PadRight(10) +
-            //        $"{islandLocation.CommonName}".PadRight(30) +
-            //        $"{islandLocation.Accessible}".PadRight(10) +
-            //        Environment.NewLine;
-            //    }
-            //}
-
-            //messageBox += islandLocationList;
 
             return messageBox;
         }
@@ -503,7 +495,11 @@ namespace TB_QuestGame
                 " \n" +
                 " \n" +                        
 
-                islandLocation.Description;            
+                islandLocation.Description +
+
+                " \n" +
+                " \n" +
+                "\tChoose from the menu options to proceed.\n";
 
             return messageBox;
         }
@@ -511,7 +507,7 @@ namespace TB_QuestGame
         /// <summary>
         /// displays all island locations that have been visited by the player
         /// </summary>        
-        public static string VisitedLocations(IEnumerable<IslandLocation> islandLocation)
+        public static string VisitedLocations()
         {
             string meassageBox = 
                 "Islands you've Visited\n" +

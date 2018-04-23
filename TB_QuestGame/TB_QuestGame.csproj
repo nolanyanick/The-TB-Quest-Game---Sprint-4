@@ -45,11 +45,13 @@
   <ItemGroup>
     <Compile Include="Assets\ActionMenu.cs" />
     <Compile Include="Assets\Text.cs" />
+    <Compile Include="Models\NPCs\Civillian.cs" />
     <Compile Include="ConsoleUtilities\ConsoleLayout.cs" />
     <Compile Include="ConsoleUtilities\ConsoleTheme.cs" />
     <Compile Include="ConsoleUtilities\ConsoleWindowControl.cs" />
     <Compile Include="ConsoleUtilities\ConsoleWindowHelper.cs" />
     <Compile Include="Controllers\Controller.cs" />
+    <Compile Include="ISpeak.cs" />
     <Compile Include="Models\Objects\Food.cs" />
     <Compile Include="Models\GameObject.cs" />
     <Compile Include="Models\IslandLocation.cs" />
@@ -57,13 +59,14 @@
     <Compile Include="Models\Menu.cs" />
     <Compile Include="Models\Player.cs" />
     <Compile Include="Models\Enums\PlayerAction.cs" />
+    <Compile Include="Models\Npc.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\Universe.cs" />
     <Compile Include="Assets\UniverseObjectsIslandLocations.cs" />
-    <Compile Include="Models\Objects\Ship.cs" />
     <Compile Include="Assets\UniverseObjectsGameObjects.cs" />
     <Compile Include="Models\Objects\Treasure.cs" />
+    <Compile Include="Assets\UniverseObjectsNpcs.cs" />
     <Compile Include="Views\ConsoleView.cs" />
     <Compile Include="Models\Objects\Weapon.cs" />
   </ItemGroup>

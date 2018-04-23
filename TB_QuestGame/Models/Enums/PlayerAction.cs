@@ -15,19 +15,29 @@ namespace TB_QuestGame
         MissionSetup,
         RandomName,
         LookAround,
+        Travel,
+
+        PlayerMenu,
+        PlayerInfo,
+        EditPlayerInfo,
+        Inventory,
+        TreasureInventory,
+        PirateLocationsVisited,
+
+        ObjectMenu,
         LookAt,
         PickUp,
         PutDown,
-        Inventory,
-        TreasureInventory,
-        Travel,
-        PlayerInfo,
-        EditPlayerInfo,
-        PirateLocationsVisited,
+
+        NpcMenu,
+        TalkTo,
+
+        AdminMenu,
         ListDestinations,
+        ListNpcs,
         ListGameObjects,
         ListTreasures,
-        AdminMenu,
+    
         ReturnToMainMenu,  
         Return,
         Exit

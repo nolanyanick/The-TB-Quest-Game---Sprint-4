@@ -28,7 +28,18 @@ namespace TB_QuestGame
         private List<string> _crew;
         private List<int> _islandLocationsVisited;
         private List<GameObject> _inventory;
-        private Ship.ShipType _ship;
+
+
+        //
+        // *NOTE: field, property pair used to examine/use individual objects
+
+        private int _individualGameObject;
+
+        public int IndividualGameObject
+        {
+            get { return _individualGameObject; }
+            set { _individualGameObject = value; }
+        }
 
         private List<Treasure> _treasureInventory;
 
@@ -95,12 +106,6 @@ namespace TB_QuestGame
         {
             get { return _inventory; }
             set { _inventory = value; }
-        }
-
-        public Ship.ShipType Ship
-        {
-            get { return _ship; }
-            set { _ship = value; }
         }
 
         #endregion

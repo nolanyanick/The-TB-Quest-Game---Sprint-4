@@ -16,30 +16,30 @@ namespace TB_QuestGame
         /// </summary>
         public static List<IslandLocation> IslandLocations = new List<IslandLocation>()
         {
-            //port royal
+            //damp cell
             new IslandLocation
             {
-                CommonName = "Port Royal",
+                CommonName = "Damp Cell",
                 IslandLocationID = 1,
-                Date = 1657,
+                Date = 1252,
                 Coordinates = "17.9368° N, 76.8411° W",
-                Description = "Located on the largest island in the Caribbean, Port Royal is the largest city " +
-                    "functioning as the centre of shipping and commerce in the Caribbean Sea." +
-                    "Currently under English control, Port Royal is not only a place of gaudy displays of" +
-                    "wealth and loose morals, but also a mecha for pirates and buccaneers alike.",
-                GeneralContents = "There are many ornate buildings lining the streets with numerous " +
-                    "smaller shacks tucked away in the alleys. It's currently high noon making the port " +
-                    "seem like a tropical paradise. There are countless people, " +
-                    "ranging from English calvarymen to commonfolk and pirates, all  " +
-                    "soaking up the sun and roaming the streets.",
+                Description = "You are currently in a small cell tucked away in a corner of one the larger rooms in the dungeon. " +
+                    "Altought the smell is almost unbareable, you've made this small space your temporary home as plot your escape. " +
+                    "The isolation provided by the cell allows to stay hidden from possible threats, and " +
+                    "it allows you to work/plan in secrecy.",
+                GeneralContents = "The cell is extremely cramped and movement is very limited." +
+                    "There are numerous cobwebs that litter the walls and ceiling and the smell " +
+                    "is so bad, rats don't even make their apparence here. In the far corner of the cell " +
+                    "water is leaking through a crack in the ceiling and down to puddle on the floor, contributing " +
+                    "to the horrible smell.",
                 Accessible = true,
-                ExperiencePoints = 10
+                ExperiencePoints = 0
             },
 
             //tortuga
             new IslandLocation
             {
-                CommonName = "Tortuga",
+                CommonName = "Dark Corridor",
                 IslandLocationID = 2,
                 Date = 1657,
                 Coordinates = "20.0549° N, 72.7925° W",
@@ -57,7 +57,7 @@ namespace TB_QuestGame
             //kingston
             new IslandLocation
             {
-                CommonName = "Kingston",
+                CommonName = "Forgotten Vault",
                 IslandLocationID = 3,
                 Date = 1657,
                 Coordinates = "44.2312° N, 76.4860° W",
@@ -67,14 +67,14 @@ namespace TB_QuestGame
                     "amounts of goods and servcies of all kinds are bought and sold. " +
                     "Becasue of this, Kingston is often filled with traders, travelers, pirates, etc. " +
                     "all here to experience the trading hotbed.",
-                Accessible = true,
+                Accessible = false,
                 ExperiencePoints = 10
             },
 
             //isla de la muerte
             new IslandLocation
             {
-                CommonName = "Isla de la Muerte",
+                CommonName = "Portal Room",
                 IslandLocationID = 4,
                 Date = 1657,
                 Coordinates = "25.0343° N, 77.3963° W",
@@ -94,7 +94,7 @@ namespace TB_QuestGame
             //monarch bay
             new IslandLocation
             {
-                CommonName = "Monarch Bay",
+                CommonName = "Room of Silence",
                 IslandLocationID = 5,
                 Date = 1657,
                 Coordinates = "18.2208° N, 66.5901°",
@@ -111,16 +111,13 @@ namespace TB_QuestGame
             //isle du soleil - modify
             new IslandLocation
             {
-                CommonName = "Île du Soleil",
+                CommonName = "Sacred Den",
                 IslandLocationID = 6,
                 Date = 1657,
                 Coordinates = "18.1096° N, 77.2975° W",
-                Description = "The Norlon Corporation research facility located in " +
-                    "the city of Heraklion on the north coast of Crete and the top secret " +
-                    "research lab for the Aion Project.\n",
-                GeneralContents = "The lab is a large, well lit room, and staffed " +
-                    "by a small number of scientists, all wearing light blue uniforms with the " +
-                    "hydra-like Norlan Corporation logo. \n",
+                Description = "A remote island that recieves more sun than anywhere else in the Caribbean.\n" +
+                "the island is laso litered with dangerous creatures, amongst the most ferocious are Sirens.",
+                GeneralContents = " \n",
                 Accessible = false,
                 ExperiencePoints = 10
             },
@@ -128,7 +125,7 @@ namespace TB_QuestGame
             //renegade's beach - modify
             new IslandLocation
             {
-                CommonName = "Renegade's Beach",
+                CommonName = "Cavern of Life",
                 IslandLocationID = 7,
                 Date = 1657,
                 Coordinates = "18.1096° N, 77.2975° W",
@@ -143,16 +140,12 @@ namespace TB_QuestGame
             //shipwreck cove - modify
             new IslandLocation
             {
-                CommonName = "Shipwreck Cove",
+                CommonName = "Secret Armory",
                 IslandLocationID = 8,
                 Date = 1657,
                 Coordinates = "9.1096° N, 64.2975° W",
-                Description = "The Norlon Corporation research facility located in " +
-                    "the city of Heraklion on the north coast of Crete and the top secret " +
-                    "research lab for the Aion Project.\n",
-                GeneralContents = "The lab is a large, well lit room, and staffed " +
-                    "by a small number of scientists, all wearing light blue uniforms with the " +
-                    "hydra-like Norlan Corporation logo. \n",
+                Description = " \n",
+                GeneralContents = " \n",
                 Accessible = false,
                 ExperiencePoints = 10
             }

@@ -10,22 +10,23 @@ namespace TB_QuestGame
     {
         public enum ObjectType
         {
-            Food,
-            Ship,
+            Food,            
             Treasure,
             Weapon
         }
 
-        public  int Id { get; set; }
-        public  string Name { get; set; }
-        public  string Description { get; set; }
-        public  int IslandLocationId { get; set; }        
-        public bool CanInventory { get; set; }
-        public bool IsConsumable { get; set; }
-        public bool IsVisible { get; set; }
-        public int Value { get; set; }
-        public bool HasBeenPickedUp { get; set; }
-        public ObjectType Type { get; set; }
+        public abstract int Id { get; set; }
+        public abstract string Name { get; set; }
+        public abstract string Description { get; set; }
+        public abstract int IslandLocationId { get; set; }        
+        public abstract bool CanInventory { get; set; }
+        public abstract bool IsConsumable { get; set; }
+        public abstract bool IsVisible { get; set; }
+        public abstract int Value { get; set; }
+        public abstract bool HasBeenPickedUp { get; set; }
+        public abstract ObjectType Type { get; set; }
+        public abstract bool Consumed { get; set; }
+
 
 
     }

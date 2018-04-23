@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TB_QuestGame
 {
-    class Food : GameObject
+    public class  Food : GameObject
     {
 
         #region ENUMS
@@ -20,6 +20,18 @@ namespace TB_QuestGame
 
         private bool _isSpoiled;
         private int _healthPoints;
+        public override int Id { get; set; }
+        public override string Name { get; set; }
+        public override string Description { get; set; }
+        public override int IslandLocationId { get; set; }
+        public override bool CanInventory { get; set; }
+        public override bool IsConsumable { get; set; }
+        public override bool IsVisible { get; set; }
+        public override int Value { get; set; }
+        public override bool HasBeenPickedUp { get; set; }
+        public override bool Consumed { get; set; }
+
+        public override ObjectType Type { get; set; }
 
         #endregion
 
