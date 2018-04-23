@@ -20,7 +20,6 @@ namespace TB_QuestGame
 
         public string Speak()
         {
-
             if (this.Messages != null)
             {
                 return GetMessage();

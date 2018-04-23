@@ -182,15 +182,6 @@ namespace TB_QuestGame
                     case PlayerAction.Travel:
 
                         //
-                        // determine if the player has a ship in order to travel
-                        //
-                        if (!_gamePirate.ShipOwner)
-                        {
-                            _gameConsoleView.DisplayInputErrorMessage("You currently do not own a ship needed to travel. Obtain a ship, and try again.");
-                            break;
-                        }
-
-                        //
                         // get new location choice and update current location
                         //
                         _gamePirate.IslandLocationId = _gameConsoleView.DisplayGetNextIslandLocation();
@@ -322,7 +313,7 @@ namespace TB_QuestGame
 
             #region ***ISLA DE LA MUERTE
 
-            if (_gameUniverse.Npcs[1].DialogueExhausted)
+            if (_gameUniverse.Npcs[0].DialogueExhausted)
             {
                 _gameUniverse.IslandLocations[2].Accessible = true;
             }

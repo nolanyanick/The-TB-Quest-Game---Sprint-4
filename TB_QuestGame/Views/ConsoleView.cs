@@ -196,7 +196,7 @@ namespace TB_QuestGame
                 else
                 {
                     ClearInputBox();
-                    DisplayInputErrorMessage($"You must enter an integer value between {minimumValue} and {maximumValue}. Please try again.");
+                    DisplayInputErrorMessage($"You must enter a valid Id number. Please try again.");
                     DisplayInputBoxPrompt(prompt);
                 }
             }
@@ -1040,7 +1040,7 @@ namespace TB_QuestGame
                     foreach (var npc in npcsInCurrentLocation)
                     {
                         Console.SetCursorPosition(ConsoleLayout.MessageBoxPositionLeft + 50, ConsoleLayout.MenuBoxPositionTop + cursorPosition++);
-                        Console.ForegroundColor = ConsoleColor.DarkRed;
+                        Console.ForegroundColor = ConsoleColor.DarkCyan;
                         Console.Write(npc.Name);
                     }
 
@@ -1055,7 +1055,7 @@ namespace TB_QuestGame
 
                     //-----HEADER-----//                    
                     Console.SetCursorPosition(ConsoleLayout.MessageBoxPositionLeft + 40, ConsoleLayout.MenuBoxPositionTop + 10);
-                    Console.ForegroundColor = ConsoleColor.DarkBlue;
+                    Console.ForegroundColor = ConsoleColor.DarkYellow;
                     Console.Write("NPCs");
 
                     //-----TABLE-----//
@@ -1081,7 +1081,7 @@ namespace TB_QuestGame
                     foreach (var npc in npcsInCurrentLocation)
                     {
                         Console.SetCursorPosition(ConsoleLayout.MessageBoxPositionLeft + 12, ConsoleLayout.MenuBoxPositionTop + cursorPosition++);
-                        Console.ForegroundColor = ConsoleColor.DarkRed;
+                        Console.ForegroundColor = ConsoleColor.DarkCyan;
                         Console.Write(npc.Name);
                     }
 
@@ -1564,7 +1564,6 @@ namespace TB_QuestGame
                 if (GetString() == "NO")
                 {
                     DisplayGamePlayScreen("NPC Menu", "Select an operation from the menu.", ActionMenu.NpcMenu, "");
-                    DisplayInputErrorMessage($"NOTE: {npc.Name} has nothing more to say");
                     speakingToNpc = false;
                 }                
             }
