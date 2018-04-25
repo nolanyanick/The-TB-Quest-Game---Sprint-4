@@ -125,6 +125,32 @@ namespace TB_QuestGame
             }
         }
 
+
+
+        /// <summary>
+        /// determines if the selected object is in the NPC's inventory
+        /// </summary>
+        public bool IsValidObjectByNpcInventoryId(int gameObjectId, ITrade trader)
+        {        
+            //
+            // determines if the game object id is valid and returns the result
+            //
+            if ( trader.InventoryIds.Contains(gameObjectId))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+
+
+
+
+
+
         /// <summary>
         /// determines if npc in question is valid
         /// </summary>
@@ -207,6 +233,50 @@ namespace TB_QuestGame
 
             return npcs;
         }
+
+
+
+
+
+
+
+
+
+
+
+        public List<Trader> GetTraderNpcsByIslandLocation(int isandLocationId)
+        {
+            List<Trader> npcs = new List<Trader>();
+
+            //
+            // run through the NPC object list and grab all Traders that are in the current location
+            //
+            foreach (Npc npc in _npcs)
+            {
+                if (npc.IslandLocationId == isandLocationId && npc is Trader)
+                {
+                    npcs.Add((Trader)npc);
+                }
+            }
+
+            return npcs;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         /// <summary>
         /// gets an object via its id

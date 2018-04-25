@@ -145,9 +145,9 @@ namespace TB_QuestGame
                 }
                 else
                 {
-                    ClearInputBox();
-                    DisplayInputErrorMessage($"You must enter 'Yes' or 'No'. Please try again.");
-                    DisplayInputBoxPrompt("Would you like to continue this conversation? (Yes or No): ");                    
+                        ClearInputBox();
+                        DisplayInputErrorMessage($"You must enter 'Yes' or 'No'. Please try again.");
+                        DisplayInputBoxPrompt("Would you like to continue this conversation? (Yes or No): ");                                                           
                 }
             }
 
@@ -195,8 +195,8 @@ namespace TB_QuestGame
                 }
                 else
                 {
-                    ClearInputBox();
-                    DisplayInputErrorMessage($"You must enter a valid Id number. Please try again.");
+                    ClearInputBox();                    
+                    DisplayInputErrorMessage($"You must enter a valid Id number. Please try again.                                                 ");
                     DisplayInputBoxPrompt(prompt);
                 }
             }
@@ -408,7 +408,7 @@ namespace TB_QuestGame
                 //
                 int startingRow = ConsoleLayout.StatusBoxPositionTop + 3;
                 int row = startingRow;
-                foreach (string statusTextLine in Text.StatusBox(_gamePirate, _gameUniverse))
+                foreach (string statusTextLine in Text.StatusBox(_gamePirate))
                 {
                     Console.SetCursorPosition(ConsoleLayout.StatusBoxPositionLeft + 3, row);
                     Console.Write(statusTextLine);
@@ -516,6 +516,10 @@ namespace TB_QuestGame
 
                 case PlayerAction.None:
                     #region ***COLORS FOR MISC/OTHER SCREENS
+
+
+
+                    _viewStatus = ViewStatus.PlayingGame;
 
                     #region ---echo info screen---
 
@@ -995,7 +999,13 @@ namespace TB_QuestGame
         public void DisplayColoredNpcs(PlayerAction choosenAction)
         {
             int cursorPosition;
+            
+            //-----list of Civillians-----//
             List<Npc> npcsInCurrentLocation = _gameUniverse.GetNpcsByIslandLocation(_gamePirate.IslandLocationId);
+
+            //-----list of Traders-----//
+            List<Trader> tradersInCurrentLocation = _gameUniverse.GetTraderNpcsByIslandLocation(_gamePirate.IslandLocationId);
+
 
             switch (choosenAction)
             {
@@ -1076,6 +1086,17 @@ namespace TB_QuestGame
                 case PlayerAction.TalkTo:
                     #region ***COLORS FOR TALK TO
 
+                    // temporary list of NPCs used to remove NPCs that have been spoken to
+                    List<Npc> tempNpcList = _gameUniverse.GetNpcsByIslandLocation(_gamePirate.IslandLocationId);
+
+                    foreach (Npc npc in tempNpcList)
+                    {
+                        if (npc.DialogueExhausted == true)
+                        {
+                            npcsInCurrentLocation.Remove(npc);
+                        }
+                    }
+
                     //-----NAME-----//
                     cursorPosition = 7;
                     foreach (var npc in npcsInCurrentLocation)
@@ -1088,6 +1109,30 @@ namespace TB_QuestGame
                     //-----ID-----//
                     cursorPosition = 7;
                     foreach (var npc in npcsInCurrentLocation)
+                    {
+                        Console.SetCursorPosition(ConsoleLayout.MessageBoxPositionLeft + 2, ConsoleLayout.MenuBoxPositionTop + cursorPosition++);
+                        Console.ForegroundColor = ConsoleColor.DarkMagenta;
+                        Console.Write(npc.Id);
+                    }
+
+                    #endregion
+                    break;
+
+                case PlayerAction.TradeWith:
+                    #region ***COLORS FOR TRADE WITH
+
+                    //-----NAME-----//
+                    cursorPosition = 7;
+                    foreach (var npc in tradersInCurrentLocation)
+                    {
+                        Console.SetCursorPosition(ConsoleLayout.MessageBoxPositionLeft + 12, ConsoleLayout.MenuBoxPositionTop + cursorPosition++);
+                        Console.ForegroundColor = ConsoleColor.DarkCyan;
+                        Console.Write(npc.Name);
+                    }
+
+                    //-----ID-----//
+                    cursorPosition = 7;
+                    foreach (var npc in tradersInCurrentLocation)
                     {
                         Console.SetCursorPosition(ConsoleLayout.MessageBoxPositionLeft + 2, ConsoleLayout.MenuBoxPositionTop + cursorPosition++);
                         Console.ForegroundColor = ConsoleColor.DarkMagenta;
@@ -1182,7 +1227,7 @@ namespace TB_QuestGame
             //
             DisplayGamePlayScreen("Quest Setup - Name", Text.InitializeMissionGetPrisonerName(), ActionMenu.InitializePlayerName, "");
             DisplayInputBoxPrompt("Enter your name: ");
-            gamePirate.Name = GetString();
+            gamePirate.Name = Console.ReadLine();
             
 
             if (gamePirate.Name == "1")
@@ -1200,7 +1245,7 @@ namespace TB_QuestGame
                     DisplayGamePlayScreen("Quest Setup - Name", Text.InitializeMissionGetRandomName, ActionMenu.InitializeRandomName, "");
                     DisplayColoredText(gamePirate.Name ,choosenAction, location);
                     DisplayInputBoxPrompt(prompt);
-                    userResponese = GetString().ToUpper();
+                    userResponese = Console.ReadLine().ToUpper();
 
                     if (userResponese == "YES")
                     {
@@ -1228,7 +1273,7 @@ namespace TB_QuestGame
                         //
                         DisplayGamePlayScreen("Quest Setup - Name", Text.InitializeMissionGetPrisonerName(), ActionMenu.InitializePlayerName, "");
                         DisplayInputBoxPrompt("Enter your name: ");
-                        gamePirate.Name = GetString();
+                        gamePirate.Name = Console.ReadLine();
 
                         if (gamePirate.Name == "1")
                         {
@@ -1354,7 +1399,7 @@ namespace TB_QuestGame
             while (editingInfo)
             {
                 DisplayInputBoxPrompt($"Enter your selection {_gamePirate.Name}: ");
-                userResponse = GetString().ToUpper();
+                userResponse = Console.ReadLine().ToUpper();
                 if (userResponse == "A" || userResponse == "B" || userResponse == "C")
                 {
                     switch (userResponse)
@@ -1362,7 +1407,7 @@ namespace TB_QuestGame
                         case "A":
                             DisplayGamePlayScreen("Edit Player Information", $"You have selcted to edit your Name.\n" + "If you change your mind, you may enter 'Back' to be returned to the previous menu.\n", ActionMenu.PlayerMenu, "");
                             DisplayInputBoxPrompt($"Enter your new name: ");
-                            _gamePirate.Name = GetString();
+                            _gamePirate.Name = Console.ReadLine();
                             editingInfo = false;
                             break;
                            
@@ -1472,8 +1517,25 @@ namespace TB_QuestGame
             //
             List<Npc> npcsInCurrentLocation = _gameUniverse.GetNpcsByIslandLocation(_gamePirate.IslandLocationId);
 
+            // temporary NPC list to be used to remove NPCs that have been spoken to
+            List<Npc> tempNpcList = _gameUniverse.GetNpcsByIslandLocation(_gamePirate.IslandLocationId);
+
             if (npcsInCurrentLocation.Count > 0)
             {
+                foreach (Civillian npc in tempNpcList)
+                {
+                    if (npc.DialogueExhausted == true)
+                    {
+                        npcsInCurrentLocation.Remove(npc);
+                    }
+                }
+
+                if (npcsInCurrentLocation.Count <= 0)
+                {
+                    DisplayGamePlayScreen("Choose Character to Speak With", "It appears there are no NPCs here who want to chat.", ActionMenu.NpcMenu, "");
+                    return npcId;
+                }
+
                 DisplayGamePlayScreen("Choose Character to Speak With", Text.NpcsChooseList(), ActionMenu.NpcMenu, "");
                 DisplayColoredNpcs(PlayerAction.TalkTo);
 
@@ -1511,7 +1573,7 @@ namespace TB_QuestGame
                     else
                     {
                         ClearInputBox();
-                        DisplayInputErrorMessage("It appears this character has nothing to say. Please try again.");
+                        DisplayInputErrorMessage("You enetered an invalid Id number. Please try again.");
                     }
                 }
             }
@@ -1521,7 +1583,198 @@ namespace TB_QuestGame
             }
 
             return npcId;
-        } 
+        }
+
+
+
+
+
+
+
+
+
+
+
+        /// <summary>
+        /// gets a valid NPC to trade with
+        /// </summary>
+        public int DisplayGetNpcToTradeWith()
+        {
+            int traderId = 0;
+            Trader trader = new Trader();
+            bool validNpcId = false;
+
+            //
+            // get a list of NPCs in the current location
+            //
+            List<Trader> tradersInCurrentLocation = _gameUniverse.GetTraderNpcsByIslandLocation(_gamePirate.IslandLocationId);
+
+            if (tradersInCurrentLocation.Count > 0)
+            {
+                DisplayGamePlayScreen("Choose Character to Trade With", Text.NpcsChooseList(), ActionMenu.NpcMenu, "");
+                DisplayColoredNpcs(PlayerAction.TradeWith);
+
+                while (!validNpcId)
+                {
+                    //
+                    // get an integer fomr the user
+                    //
+                    GetInteger($"Enter the Id number of the NPC you wish to trade with: ", 0, 0, out traderId);
+
+                    //
+                    // validate integer as a valid game object id and in the current location
+                    //                    
+                    if (_gameUniverse.IsValidNpcByLocationId(traderId, _gamePirate.IslandLocationId))
+                    {
+                        Npc npc = _gameUniverse.GetNpcById(traderId);
+                        if (npc is ITrade)
+                        {
+                            validNpcId = true;
+                            trader = (Trader)npc;
+                        }
+                        else
+                        {
+                            ClearInputBox();
+                            DisplayInputErrorMessage("It appears this character has nothing to trade. Please try again.");
+                        }
+
+                        if (trader.Inventory.Count < 0)
+                        {
+                            ClearInputBox();
+                            DisplayInputErrorMessage($"{npc.Name}'s is out of stock! Please try again.");
+                            validNpcId = false;
+                        }
+
+                    }
+                    else
+                    {
+                        ClearInputBox();
+                        DisplayInputErrorMessage("It appears there are no Traders here.");
+                    }
+                }
+            }
+            else
+            {
+                DisplayGamePlayScreen("Choose Character to Trade With", "It appears there are no Traders here.", ActionMenu.NpcMenu, "");
+            }
+
+            return traderId;
+        }
+
+        /// <summary>
+        /// gets a valid object to be traded
+        /// </summary>
+        public int DisplayGetValidObjectIdToTrade(Npc npc)
+        {
+            ITrade tradingNpc = npc as ITrade;
+            int tradingObjectId = 0;
+            bool validObjectId = false;
+
+            DisplayGamePlayScreen($"Trading With : {npc.Name}", Text.GameObjectsChooseList(tradingNpc.Inventory), ActionMenu.NpcMenu, "");
+
+
+            while (!validObjectId)
+            {
+                GetInteger("Enter the Id number of the object you wish trade for: ", 0, 0, out tradingObjectId);
+
+                if (_gameUniverse.IsValidObjectByNpcInventoryId(tradingObjectId, tradingNpc))
+                {
+                    validObjectId = true;
+                }
+                else
+                {
+                    ClearInputBox();
+                    DisplayInputErrorMessage("Invalid Id number. Please try again.");
+                }
+            }
+
+            return tradingObjectId;
+        }
+
+
+
+
+        public void DisplayTradeWith(int npcObjectId, int playerObjectId, Npc npc)
+        {
+            GameObject gameObjectToBeTraded =  _gameUniverse.GetObjectById(npcObjectId);            
+            ITrade tradingNpc = npc as ITrade;
+            bool trading = true;
+
+            if (npcObjectId == 14)
+            {
+                playerObjectId = 13;
+            }
+            else if (npcObjectId == 15)
+            {
+                playerObjectId = 6;
+            }
+            else if (npcObjectId == 16)
+            {
+                playerObjectId = 10;
+            }
+
+            ActionMenu.currentMenu = ActionMenu.CurrentMenu.TradeMenu;
+            DisplayGamePlayScreen($"Object Info : {gameObjectToBeTraded.Name}", Text.LookAt(gameObjectToBeTraded), ActionMenu.TradeMenu ,"");
+            DisplayInputBoxPrompt("Would you like to trade for this item? (Yes or No): ");
+
+            while (trading)
+            {
+                if (GetString() == "YES")
+                {
+                    tradingNpc.Trade(gameObjectToBeTraded.Id, playerObjectId, _gamePirate);
+
+                    if (tradingNpc.InventoryIds.Contains(gameObjectToBeTraded.Id))
+                    {
+                        ClearInputBox();
+                        DisplayInputErrorMessage("You lack the required item in order to trade! Please try again.                             ");
+                        DisplayInputBoxPrompt("Would you like to trade for this item? (Yes or No): ");
+                    }
+                    else
+                    {
+                        trading = false;
+                    }
+                }
+                else
+                {
+                    trading = false;
+                }
+            }
+
+            DisplayGamePlayScreen("NPC Menu", "Select an operation from the menu.", ActionMenu.NpcMenu, "");
+            ActionMenu.currentMenu = ActionMenu.CurrentMenu.NpcMenu;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         /// <summary>
         /// displays the NPC's message to the player
@@ -1540,6 +1793,16 @@ namespace TB_QuestGame
                 if (messageIndex >= speakingNpc.Messages.Count)
                 {
                     npc.DialogueExhausted = true;
+
+                    // add exp points and health
+                    if (npc.ExperiencePoints != 0)
+                    {
+                        npc = npc as Civillian;
+                        _gamePirate.ExperiencePoints += npc.ExperiencePoints;
+                        _gamePirate.Health += npc.HealthPoints;
+                        npc.ExperiencePoints = 0;
+                    }
+
                     DisplayInputErrorMessage($"{npc.Name} has nothing more to say at this time. Press the Enter key to continue.");
                     GetContinueKey();
                     DisplayGamePlayScreen("NPC Menu", "Select an operation from the menu.", ActionMenu.NpcMenu, "");                    

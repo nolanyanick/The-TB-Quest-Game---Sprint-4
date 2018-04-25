@@ -21,12 +21,12 @@ namespace TB_QuestGame
             new Treasure()
             {
                 Id = 10,
-                Name = "Gold Coin",
+                Name = "Amethyst",
                 Type = GameObject.ObjectType.Treasure,
                 IslandLocationId = 0,
-                Description = "Gold coin, used as common currency.",             
+                Description = "A nice lookin amethyst.",             
                 Value = 100,
-                Rarity = Treasure.RarityLevel.Common,
+                Rarity = Treasure.RarityLevel.Unique,
                 CanInventory = true,
                 IsConsumable = false,
                 IsVisible = true

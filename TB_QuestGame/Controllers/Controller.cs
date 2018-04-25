@@ -233,6 +233,10 @@ namespace TB_QuestGame
                         TalkToAction();
                         break;
 
+                    case PlayerAction.TradeWith:
+                        TradeWithAction();
+                        break;
+
                     case PlayerAction.Exit:
                         _gameConsoleView.DisplayClosingScreen();
                         _playingGame = false;
@@ -254,9 +258,9 @@ namespace TB_QuestGame
         /// </summary>
         private void InitializeMission()
         {
-            //Player pirate = _gameConsoleView.GetInitialPirateInfo();
+           // Player pirate = _gameConsoleView.GetInitialPirateInfo();
 
-            // player information
+            ////player information
             //_gamePirate.Age = pirate.Age;
             //_gamePirate.Gender = pirate.Gender;
             //_gamePirate.Personality = pirate.Personality;
@@ -267,7 +271,11 @@ namespace TB_QuestGame
             _gamePirate.Age = 50;
             _gamePirate.Gender = Character.GenderType.MALE;
             _gamePirate.Personality = true;
-            _gamePirate.Name = "Bill";           
+            _gamePirate.Name = "Bill";            
+
+
+
+            _gamePirate.TreasureInventory.Add((Treasure)_gameUniverse.GameObjects[3]);
 
             //
             // default player stats
@@ -311,7 +319,7 @@ namespace TB_QuestGame
 
             #region ----- update island accessibility -----
 
-            #region ***ISLA DE LA MUERTE
+            #region ***FORGOTTEN VAULT
 
             if (_gameUniverse.Npcs[0].DialogueExhausted)
             {
@@ -431,33 +439,26 @@ namespace TB_QuestGame
 
             if (_gamePirate.ExperiencePoints > 100)
             {
-                _gamePirate.Health = +20;
+                _gamePirate.Health += 20;
             }
             else if (_gamePirate.ExperiencePoints > 200)
             {
-                _gamePirate.Health = +20;
+                _gamePirate.Health += 20;
             }
             else if (_gamePirate.ExperiencePoints > 300)
             {
-                _gamePirate.Health = +20;
+                _gamePirate.Health += 20;
             }
             else if (_gamePirate.ExperiencePoints > 400)
             {
-                _gamePirate.Health = +20;
+                _gamePirate.Health += 20;
             }
             else if (_gamePirate.ExperiencePoints > 500)
             {
-                _gamePirate.Health = +20;
+                _gamePirate.Health += 20;
             }
 
-            #endregion
-            
-
-            if (_gameUniverse.GetObjectById(1).Consumed)
-            {
-                Food foodObject = (Food)_gameUniverse.GetObjectById(1);
-                _gamePirate.Health += foodObject.HealthPoints;
-            }
+            #endregion            
 
             #endregion
 
@@ -597,6 +598,34 @@ namespace TB_QuestGame
         }
 
         /// <summary>
+        /// allows player to trade with specific NPCs
+        /// </summary>
+        private void TradeWithAction()
+        {
+            //
+            // display a list of NPCs in the curren location
+            // and get the player's choice
+            //
+            int npcToTradeWithId = _gameConsoleView.DisplayGetNpcToTradeWith();
+
+            //
+            // display NPC's message
+            //
+            if (npcToTradeWithId != 0)
+            {
+                //
+                // get the NPC from the universe
+                //
+                Npc npc = _gameUniverse.GetNpcById(npcToTradeWithId);
+
+                //
+                // get valid object id in the NPC's inventory
+                //
+                _gameConsoleView.DisplayTradeWith(_gameConsoleView.DisplayGetValidObjectIdToTrade(npc), 0, npc);
+            }
+        }
+
+        /// <summary>
         /// gets the action from the player
         /// </summary>
         private PlayerAction GetNextPlayerAction()
@@ -623,6 +652,10 @@ namespace TB_QuestGame
 
                 case ActionMenu.CurrentMenu.AdminMenu:
                     playerActionChoice = _gameConsoleView.GetActionMenuChoice(ActionMenu.AdminMenu);
+                    break;
+
+                case ActionMenu.CurrentMenu.TradeMenu:
+                    playerActionChoice = _gameConsoleView.GetActionMenuChoice(ActionMenu.TradeMenu);
                     break;
 
                 default:

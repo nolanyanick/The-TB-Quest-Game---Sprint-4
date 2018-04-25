@@ -18,6 +18,7 @@ namespace TB_QuestGame
             MainMenu,
             ObjectMenu,
             NpcMenu,
+            TradeMenu,
             PlayerMenu,
             AdminMenu,
             InitializePlayerName,
@@ -129,10 +130,21 @@ namespace TB_QuestGame
             MenuChoices = new Dictionary<char, PlayerAction>()
             {
                     {'1', PlayerAction.TalkTo },
+                    {'2', PlayerAction.TradeWith },
                     {'0', PlayerAction.ReturnToMainMenu }
             }
         };
 
+        public static Menu TradeMenu = new Menu()
+        {
+            MenuName = "TradeMenu",
+            MenuTitle = "Trade Menu",
+            MenuChoices = new Dictionary<char, PlayerAction>()
+            {
+                    {'1', PlayerAction.Trade },
+                    {'0', PlayerAction.ReturnToMainMenu }
+            }
+        };
 
 
 

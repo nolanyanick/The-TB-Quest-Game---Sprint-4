@@ -43,15 +43,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\NPCs\Trader.cs" />
     <Compile Include="Assets\ActionMenu.cs" />
     <Compile Include="Assets\Text.cs" />
+    <Compile Include="Models\Interfaces\ITrade.cs" />
     <Compile Include="Models\NPCs\Civillian.cs" />
     <Compile Include="ConsoleUtilities\ConsoleLayout.cs" />
     <Compile Include="ConsoleUtilities\ConsoleTheme.cs" />
     <Compile Include="ConsoleUtilities\ConsoleWindowControl.cs" />
     <Compile Include="ConsoleUtilities\ConsoleWindowHelper.cs" />
     <Compile Include="Controllers\Controller.cs" />
-    <Compile Include="ISpeak.cs" />
+    <Compile Include="Models\Interfaces\ISpeak.cs" />
     <Compile Include="Models\Objects\Food.cs" />
     <Compile Include="Models\GameObject.cs" />
     <Compile Include="Models\IslandLocation.cs" />

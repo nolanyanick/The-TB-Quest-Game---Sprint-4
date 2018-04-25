@@ -31,6 +31,10 @@ namespace TB_QuestGame
 
         NpcMenu,
         TalkTo,
+        TradeWith,
+
+        TradeMenu,
+        Trade,
 
         AdminMenu,
         ListDestinations,

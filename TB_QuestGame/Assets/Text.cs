@@ -61,7 +61,7 @@ namespace TB_QuestGame
             return messageBoxText;
         }
 
-        public static List<string> StatusBox(Player gamePrisoner, Universe universe) 
+        public static List<string> StatusBox(Player gamePrisoner) 
         {
             List<string> statusBoxText = new List<string>();
 
